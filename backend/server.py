@@ -321,8 +321,6 @@ def default_content() -> Dict[str, Any]:
             "facebook": "https://facebook.com",
         },
         "nav": [
-            {"label": "EXPEDITIONS", "href": "/expeditions"},
-            {"label": "DESTINATIONS", "href": "/destinations"},
             {"label": "EXPERIENCES", "href": "/experiences"},
             {"label": "INFO & FAQ", "href": "/info"},
             {"label": "JOURNAL", "href": "/journal"},

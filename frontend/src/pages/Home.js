@@ -26,8 +26,9 @@ export default function Home({ content }) {
       <Navbar content={content} />
       <Hero content={content} />
 
-      {/* Seamless transition from hero into the journey */}
+      {/* Seamless transition from the dark hero into the paper journey */}
       <div className="relative bg-sand">
+        <div className="h-28 md:h-44 bg-gradient-to-b from-charcoal to-sand" />
         <RoadJourney motorcycle={settings.motorcycle}>
           <WhatWeDo data={content.what_we_do} />
           <HowWeDeliver data={content.how_we_deliver} />

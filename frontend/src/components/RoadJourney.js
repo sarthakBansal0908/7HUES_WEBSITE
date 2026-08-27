@@ -1,150 +1,157 @@
 import React, { useRef, useEffect } from 'react';
-import { useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
 import { prefersReducedMotion } from '../hooks/useLenis';
 
 /*
-  The winding road is an SVG (viewBox 0 0 100 1000, preserveAspectRatio="none")
-  that spans the full height of the journey wrapper. Because the viewBox width is
-  100 and height 1000, a point (x,y) on the path maps directly to
-  left = x%  and  top = (y/1000)*100%  of the wrapper — fully responsive.
+  Winding road (SVG viewBox 0 0 100 1000, preserveAspectRatio="none") spanning the
+  full journey height. The road drifts far across the page horizontally.
 
-  The motorcycle position is driven by scroll progress through the wrapper.
+  The motorcycle stays near the VERTICAL CENTRE of the viewport while scrolling and
+  glides horizontally, always sitting exactly on the road, banking subtly with the
+  road direction. Because a point (x,y) in the viewBox maps to left=x% / top=(y/1000)%
+  of the wrapper, and the bike's wrapper-top equals the viewport-centre offset, the
+  bike is guaranteed to sit on the road line.
 */
 
 const PATH_D =
-  'M50,0 C30,70 18,150 32,238 C46,326 82,362 70,458 C58,554 16,590 26,678 C36,766 80,792 62,886 C50,946 48,976 50,1000';
+  'M50,0 C26,55 10,120 34,200 C58,280 92,325 76,420 C60,515 10,560 22,655 C34,750 90,795 64,890 C50,955 50,980 50,1000';
 
 export default function RoadJourney({ motorcycle, children }) {
   const wrapRef = useRef(null);
   const pathRef = useRef(null);
   const motoRef = useRef(null);
-  const drawRef = useRef(null);
+  const traceRef = useRef(null);
+  const samplesRef = useRef([]);
   const reduced = prefersReducedMotion();
 
-  const { scrollYProgress } = useScroll({
-    target: wrapRef,
-    offset: ['start start', 'end end'],
-  });
-
-  const smooth = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 26,
-    mass: 0.4,
-  });
-
-  // draw the road as scroll progresses
-  useMotionValueEvent(smooth, 'change', (p) => {
-    const path = pathRef.current;
-    const moto = motoRef.current;
-    const wrap = wrapRef.current;
-    if (!path || !moto || !wrap) return;
-
-    const total = path.getTotalLength();
-    const len = Math.max(0, Math.min(1, p)) * total;
-    const pt = path.getPointAtLength(len);
-    const pt2 = path.getPointAtLength(Math.min(total, len + total * 0.012));
-
-    const rect = wrap.getBoundingClientRect();
-    // convert viewBox deltas to pixel deltas for a natural banking angle
-    const dxPx = ((pt2.x - pt.x) / 100) * rect.width;
-    const dyPx = ((pt2.y - pt.y) / 1000) * rect.height;
-    let angle = (Math.atan2(dxPx, Math.max(1, dyPx)) * 180) / Math.PI;
-    angle = Math.max(-24, Math.min(24, angle));
-
-    moto.style.left = `${pt.x}%`;
-    moto.style.top = `${(pt.y / 1000) * 100}%`;
-    moto.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
-
-    if (drawRef.current) {
-      drawRef.current.style.strokeDashoffset = `${1 - Math.min(1, p + 0.02)}`;
-    }
-  });
-
-  // initialize position on mount
   useEffect(() => {
     const path = pathRef.current;
-    const moto = motoRef.current;
-    if (!path || !moto) return;
-    const pt = path.getPointAtLength(0);
-    moto.style.left = `${pt.x}%`;
-    moto.style.top = `${(pt.y / 1000) * 100}%`;
-    moto.style.transform = 'translate(-50%, -50%)';
+    if (!path) return;
+
+    const total = path.getTotalLength();
+    const N = 300;
+    const samples = [];
+    for (let i = 0; i <= N; i++) {
+      const p = path.getPointAtLength((i / N) * total);
+      samples.push({ x: p.x, y: p.y });
+    }
+    samplesRef.current = samples;
+
+    let raf = 0;
+    const update = () => {
+      const wrap = wrapRef.current;
+      const moto = motoRef.current;
+      if (!wrap) return;
+      const rect = wrap.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      // wrapper-space y that currently sits at the viewport centre
+      let yc = vh / 2 - rect.top;
+      yc = Math.max(0, Math.min(rect.height, yc));
+      const frac = rect.height ? yc / rect.height : 0;
+      const targetY = frac * 1000;
+
+      const arr = samplesRef.current;
+      let idx = 0;
+      for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i].y <= targetY && arr[i + 1].y >= targetY) {
+          idx = i;
+          break;
+        }
+        if (i === arr.length - 2) idx = i;
+      }
+      const a = arr[idx];
+      const b = arr[Math.min(arr.length - 1, idx + 1)];
+      const t = b.y - a.y ? (targetY - a.y) / (b.y - a.y) : 0;
+      const x = a.x + (b.x - a.x) * t;
+
+      const dxPx = ((b.x - a.x) / 100) * rect.width;
+      const dyPx = ((b.y - a.y) / 1000) * rect.height;
+      let angle = (Math.atan2(dxPx, Math.max(1, dyPx)) * 180) / Math.PI;
+      angle = Math.max(-26, Math.min(26, angle));
+
+      if (moto) {
+        moto.style.top = `${yc}px`;
+        moto.style.left = `${x}%`;
+        moto.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+      }
+      if (traceRef.current) {
+        traceRef.current.style.strokeDashoffset = `${1 - Math.min(1, frac)}`;
+      }
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   return (
     <div ref={wrapRef} className="relative w-full">
-      {/* Road layer */}
       <svg
         className="absolute inset-0 w-full h-full z-0 pointer-events-none"
         viewBox="0 0 100 1000"
         preserveAspectRatio="none"
         aria-hidden="true"
       >
-        {/* soft road band */}
         <path
           d={PATH_D}
           fill="none"
           stroke="#a88151"
-          strokeOpacity="0.16"
-          strokeWidth="10"
+          strokeOpacity="0.14"
+          strokeWidth="9"
           strokeLinecap="round"
           vectorEffect="non-scaling-stroke"
         />
-        {/* main road line */}
-        <path
-          d={PATH_D}
-          fill="none"
-          stroke="#5C5C5C"
-          strokeOpacity="0.28"
-          strokeWidth="2"
-          strokeLinecap="round"
-          vectorEffect="non-scaling-stroke"
-        />
-        {/* animated drawn centerline (dashes) */}
         <path
           ref={pathRef}
           d={PATH_D}
           fill="none"
-          stroke="#a88151"
-          strokeWidth="2"
+          stroke="#7a6a4f"
+          strokeOpacity="0.3"
+          strokeWidth="1.5"
           strokeLinecap="round"
-          strokeDasharray="1 5"
+          strokeDasharray="1 6"
           vectorEffect="non-scaling-stroke"
-          style={{ opacity: 0.55 }}
         />
-        {/* progress trace */}
         <path
-          ref={drawRef}
+          ref={traceRef}
           d={PATH_D}
           fill="none"
-          stroke="#182A40"
-          strokeWidth="3"
+          stroke="#a88151"
+          strokeOpacity="0.55"
+          strokeWidth="2"
           strokeLinecap="round"
           pathLength="1"
           strokeDasharray="1"
           strokeDashoffset="1"
           vectorEffect="non-scaling-stroke"
-          style={{ opacity: 0.5 }}
         />
       </svg>
 
-      {/* Motorcycle marker */}
       {!reduced && motorcycle && (
         <div
           ref={motoRef}
           data-testid="scroll-motorcycle"
           className="absolute z-20 pointer-events-none will-change-transform"
-          style={{ left: '50%', top: '0%' }}
+          style={{ left: '50%', top: '0px' }}
         >
           <img
             src={motorcycle}
             alt="7HUES motorcycle travelling the route"
-            className="w-16 md:w-20 lg:w-24 h-auto drop-shadow-[0_18px_30px_rgba(0,0,0,0.45)]"
+            className="w-6 sm:w-6 md:w-7 lg:w-8 h-auto drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)]"
           />
         </div>
       )}
 
-      {/* Content sits above the road */}
       <div className="relative z-10">{children}</div>
     </div>
   );

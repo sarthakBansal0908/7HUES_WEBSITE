@@ -49,3 +49,11 @@ Logo: /logo.png (circular 7HUES road-mark). Motorcycle marker: /moto.png (green-
 ## Notes
 - Hero video is a placeholder streaming URL; poster fallback ensures cinematic look. Replaceable via CMS.
 - Screenshot tool is flaky on this page (looping video keeps network busy); rely on testing agent for verification.
+
+## Refinement Pass 1 (2026-08-27) — homepage art direction
+- Motorcycle now MUCH smaller and glides at the viewport vertical centre while moving horizontally along the road (banks with direction). Road drifts far across the page horizontally, creating negative space.
+- Navbar trimmed to EXPERIENCES / INFO & FAQ / JOURNAL; more translucent over hero.
+- Removed decorative divider lines next to section indices; larger, more confident condensed headlines; minimal borders/cards.
+- Warmer paper background (#ECE4D6). Added feathered/organically-masked photography (.feather) on key images; larger, more asymmetric compositions.
+- Seamless dark-hero → paper-journey transition band. Cinematic image-driven footer (lighter overlay, photo visible).
+- Verified by testing agent iteration_2 (frontend 90%; only nit was bike size, since reduced).

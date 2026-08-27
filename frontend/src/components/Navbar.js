@@ -25,8 +25,8 @@ export default function Navbar({ content }) {
         transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${
           scrolled
-            ? 'bg-charcoal/80 backdrop-blur-xl border-b border-white/10'
-            : 'bg-gradient-to-b from-black/50 to-transparent'
+            ? 'bg-charcoal/40 backdrop-blur-lg border-b border-white/10'
+            : 'bg-gradient-to-b from-black/35 to-transparent'
         }`}
       >
         <div className="mx-auto max-w-[1600px] px-6 md:px-10 h-20 flex items-center justify-between">

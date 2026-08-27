@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --sand: #f4f3f0;
+  --sand: #ece4d6;
   --charcoal: #121212;
   --gold: #a88151;
 }
@@ -30,15 +30,14 @@ body {
   color: #fff;
 }
 
-/* Elegant thin scrollbar */
 ::-webkit-scrollbar {
   width: 9px;
 }
 ::-webkit-scrollbar-track {
-  background: #e7e5e0;
+  background: #ddd4c4;
 }
 ::-webkit-scrollbar-thumb {
-  background: #b9b4aa;
+  background: #b3a892;
 }
 
 .font-display {
@@ -62,7 +61,7 @@ body {
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: 0.045;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -71,12 +70,18 @@ body {
   font-family: 'Oswald', sans-serif;
   font-weight: 600;
   text-transform: uppercase;
-  line-height: 0.95;
-  letter-spacing: -0.01em;
+  line-height: 0.92;
+  letter-spacing: -0.015em;
 }
 
-.mask-reveal {
-  clip-path: inset(0 0 100% 0);
+/* Organically feathered photography edges (like the reference) */
+.feather {
+  -webkit-mask-image: radial-gradient(118% 128% at 50% 46%, #000 58%, rgba(0, 0, 0, 0) 94%);
+  mask-image: radial-gradient(118% 128% at 50% 46%, #000 58%, rgba(0, 0, 0, 0) 94%);
+}
+.feather-strong {
+  -webkit-mask-image: radial-gradient(105% 118% at 50% 48%, #000 48%, rgba(0, 0, 0, 0) 90%);
+  mask-image: radial-gradient(105% 118% at 50% 48%, #000 48%, rgba(0, 0, 0, 0) 90%);
 }
 
 @media (prefers-reduced-motion: reduce) {

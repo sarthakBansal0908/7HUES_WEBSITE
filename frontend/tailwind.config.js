@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        sand: '#F4F3F0',
+        sand: '#ECE4D6',
         charcoal: '#121212',
         ink: '#1A1A1A',
         stone: '#5C5C5C',
