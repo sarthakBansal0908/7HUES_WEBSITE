@@ -1,0 +1,28 @@
+{
+  "summary": "Full backend + frontend verification of 7HUES Expeditions homepage. Backend: 8/8 pytest tests passed (health, /api/content with correct hero copy & section counts, POST /api/bookings, 422 on missing required, 403 on admin endpoints without auth, 401 on /api/auth/me). Frontend: homepage loads past the '7HUES' loading screen; hero eyebrow + all 3 headline lines are visible in white (rgb(255,255,255), opacity 1, ~109px height each) - the suspected visibility bug is NOT present; play-showreel, runtime 01:24, hero-book-cta, site-header all render; header transitions from transparent (rgba(18,18,18,0.15), no blur) to blurred dark (rgba(18,18,18,0.79) + backdrop-filter blur(24px)) on scroll; all 5 nav links + nav-book-cta present. scroll-motorcycle in DOM; inline style updates on scroll (@800 -> left:50% top:0%, @2800 -> left:30.82% top:23.01% rotate 19.6deg) confirming scroll-driven motion. Winding road SVG present. All sections render with expected counts: 4 deliver-items, 6 experience tiles, 5 why-items, 3 social-posts, 3 journal-cards; section-what-we-do / how-we-deliver / experiences / why / people / from-the-road / journal all found. Footer shows 'THE WORLD IS CALLING.' & 'ANSWER IT.' plus footer-book-cta + all 3 social links. Booking flow: /book form submit with name/phone/email shows booking-success and creates record (verified via POST /api/bookings returning ok:true). Mobile menu (390px): menu-toggle opens mobile-menu with 5 nav links, menu-close closes it. 22 images on homepage, 0 broken; moto.png loads.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Header logo", "issues": ["The configured logo image (settings.logo, customer-assets URL) shows small vertical letters 'S/D/I/T' inside the circular badge, which reads oddly next to the '7HUES EXPEDITIONS' wordmark. Not a code bug — replace via CMS if undesired."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_api.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py is a single 455-line file — acceptable for MVP but consider splitting auth/media/content/bookings into modules as it grows.",
+    "GET /api/files/{path} calls remote storage synchronously via requests inside an async endpoint — will block the event loop under load. Consider httpx.AsyncClient or run_in_executor.",
+    "init_storage() uses sync requests during startup and every file op; storage_key is module-global without locking — fine now, but a race exists on cold start under concurrent requests.",
+    "Booking model uses str for email; consider EmailStr (already imported) for validation.",
+    "@app.on_event('startup') is deprecated in FastAPI; prefer lifespan handlers.",
+    "Hero video autoplays with loop — no reduced-motion respect for the video (only RoadJourney respects prefersReducedMotion)."
+  ],
+  "updated_files": ["/app/backend/tests/test_api.py"],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "test_credentials": "N/A - homepage & bookings are public; admin endpoints verified as 403 without auth.",
+  "seed_data_creation": "Two TEST_ bookings created via API/UI: TEST_Rider (backend pytest) and TEST_Playwright (frontend flow). Safe to delete.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend API stable. All homepage sections + testids in place. If retesting, mobile menu-toggle requires ~1.5s wait after page load for the header slide-in animation before clicking (framer-motion initial y:-80). moto.png at /public/moto.png loads correctly and scroll-motorcycle inline style is driven by useMotionValueEvent - verify by scrolling to different Y positions and comparing the 'style' attribute (left/top/transform values differ)."
+}

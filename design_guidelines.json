@@ -1,0 +1,111 @@
+{
+  "theme": "hybrid_fullstack",
+  "emotions_and_vibe": "Cinematic, premium, editorial, adventurous, raw but refined, high-end travel journal",
+  "colors": {
+    "background_primary": "#F4F3F0",
+    "background_dark": "#121212",
+    "text_primary": "#1A1A1A",
+    "text_secondary": "#5C5C5C",
+    "text_light": "#F4F3F0",
+    "accent_gold": "#A88151",
+    "accent_deep_blue": "#182A40",
+    "surface_glass_light": "bg-white/70 backdrop-blur-xl border border-white/20",
+    "surface_glass_dark": "bg-black/60 backdrop-blur-xl border border-white/10"
+  },
+  "typography": {
+    "headings": "Oswald, sans-serif (Bold, uppercase, geometric, condensed)",
+    "body": "Manrope, sans-serif",
+    "details": "Space Mono, monospace",
+    "rules": [
+      "No Inter, Roboto, or standard web sans for headings.",
+      "Headings strictly uppercase with tight or wide tracking depending on weight.",
+      "Details and overlines use uppercase with wide tracking (tracking-[0.2em])."
+    ]
+  },
+  "central_concept_implementation": {
+    "description": "A scroll-linked motorcycle path that drifts organically from top to bottom, avoiding center alignment, leaving large negative space.",
+    "technical_instructions": [
+      "Use framer-motion useScroll to track page progress.",
+      "Create a fixed or absolutely positioned full-height SVG that spans from the hero bottom to the footer.",
+      "Draw the path using a <path> element. To animate drawing the path, use motion.path with pathLength bound to scrollYProgress.",
+      "To move the motorcycle along the path, use CSS offset-path (offsetPath in React) on a motion.div containing the motorcycle image, and bind offsetDistance from 0% to 100% based on scroll progress.",
+      "Ensure Lenis smooth scrolling is active to make the scroll-linked animation feel premium."
+    ]
+  },
+  "layouts_and_grids": {
+    "spacing": "Use massive spacing (py-24, py-32, py-48) to create the 'premium editorial' negative space.",
+    "experiences_section": "Use the 'Tetris' Bento Grid protocol. Asymmetrical. Images overlap the central path slightly. Col-span 8, 4, etc. No perfect alignment.",
+    "footer": "Massive py-40, text-[8vw] CTA 'THE WORLD IS CALLING.', background landscape image with bg-black/50 overlay."
+  },
+  "visual_enhancers": {
+    "textures": "Subtle noise overlay (pointer-events-none, mix-blend-overlay, opacity-5) over solid sections.",
+    "overlays": "Hero and Footer images must use maximum bg-black/50. No pure black blankets.",
+    "transitions": "Gentle parallax on large images. Use framer-motion useScroll and useTransform for y-axis offset."
+  },
+  "components": {
+    "navigation": "Sticky header. Starts with dark glassmorphism (surface_glass_dark) over hero to ensure visibility. On scroll, transitions to surface_glass_light for light sections. Must include 'EXPEDITIONS, DESTINATIONS, EXPERIENCES, INFO & FAQ, JOURNAL'.",
+    "hero": "100vh. Autoplay muted video or fallback cinematic image. Includes eyebrow 'THIS IS 7HUES' and H1 'NOT JUST A RIDE. AN EXPERIENCE YOU CARRY BACK.' Includes video progress UI and 'BOOK YOUR RIDE' CTA.",
+    "journal_cards": "Editorial cinematic cards. Image height 400px. Title overlaps image slightly. Categories in Space Mono.",
+    "buttons": "Sharp edges (rounded-none), 1px border or solid deep blue/gold. No pills for this brand. Premium, aggressive but refined."
+  },
+  "image_urls": [
+    {
+      "category": "hero",
+      "url": "https://images.unsplash.com/photo-1596687760372-4c0d266059a7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODl8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB0cmF2ZWwlMjBtb3RvcmN5Y2xl&ixlib=rb-4.1.0&q=85",
+      "description": "Dark cinematic mountain road for hero fallback"
+    },
+    {
+      "category": "what_we_do",
+      "url": "https://images.unsplash.com/photo-1582092722992-b2f960bafbfb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODl8MHwxf...",
+      "description": "Motorcycle on dirt road"
+    },
+    {
+      "category": "experiences_ride",
+      "url": "https://images.unsplash.com/photo-1629294148914-678ba902dd49?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxf",
+      "description": "Man riding on green grass"
+    },
+    {
+      "category": "experiences_stay",
+      "url": "https://images.unsplash.com/photo-1710335169909-e1af415cd893?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxf",
+      "description": "Man on balcony ocean"
+    },
+    {
+      "category": "experiences_explore",
+      "url": "https://images.unsplash.com/photo-1573826688141-c0caf0e14081?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODl8MHwxf",
+      "description": "Dirt bike near water"
+    },
+    {
+      "category": "footer",
+      "url": "https://images.unsplash.com/photo-1550149550-33b46c745e03?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxf",
+      "description": "Two motorcycles on grey road"
+    },
+    {
+      "category": "moving_motorcycle_icon",
+      "url": "https://images.unsplash.com/photo-1603465834815-99b3d4d7d119?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxf",
+      "description": "Top view of motorcycle for path animation"
+    }
+  ],
+  "accessibility": "Prefers-reduced-motion: true to disable parallax and scroll-linked animations. APCA contrast ratios. data-testid attributes on all interactive elements.",
+  "GENERAL_UI_UX_DESIGN_GUIDELINES": [
+    "All interactive and key informational elements MUST include a data-testid attribute.",
+    "Use .js files for React components, avoid .tsx.",
+    "DO NOT use complete transparent background in header, overlays, any surface that has content under it. Use glassmorphism or solid gradients.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. In frontend design, this creates what users call the 'AI slop' aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms. Always add transitions for specific interactive elements.",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file.",
+    "Always use modern button styles, for this brand use sharp geometric buttons.",
+    "NEVER use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays.",
+    "Missing categories (especially sponsor logos) = main agent will use placeholder text which is FORBIDDEN."
+  ]
+}
