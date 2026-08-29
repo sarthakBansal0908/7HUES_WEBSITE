@@ -13,6 +13,6 @@ Create a session directly in Mongo (db: sevenhues):
 Then call `/api/auth/me` with `Authorization: Bearer <session_token>` or cookie `session_token`.
 
 ## Notes
+- Admin CMS UI is BUILT at /admin (Google login). Backend admin endpoints: PUT /api/content, POST/GET/DELETE /api/media, GET /api/bookings.
+- Seeded test admin session (for testing agent): session_token `test_session_1787988800` (is_admin true) in Mongo `sevenhues`.
 - No password-based credentials (Google OAuth).
-- Admin CMS UI is not built yet (V1 = homepage first). Backend admin endpoints exist:
-  PUT /api/content, POST/GET /api/media, GET /api/bookings (all require admin).

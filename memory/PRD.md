@@ -40,11 +40,19 @@ Logo: /logo.png (circular 7HUES road-mark). Motorcycle marker: /moto.png (green-
 - Placeholder pages for Expeditions/Destinations/Experiences/Info&FAQ/Journal/Community/Privacy/Terms (consistent styling).
 
 ## Backlog / Next
-- P0: Admin/CMS dashboard UI (Google login) to edit all content + media library upload/replace + focal/alt controls.
 - P1: Expeditions listing + immersive detail pages (itinerary, inclusions, pricing, FAQs) with own models/routes.
 - P1: Destinations discovery pages; Experiences page; Info & FAQ (accordion, categories, search) — all CMS-editable.
 - P1: Journal listing + article pages (rich text, media, SEO per-article, shareable URLs).
 - P2: SEO polish (sitemap.xml, robots.txt, OG per page), responsive image/video optimization, real brand media swap-in.
+
+## Admin CMS (2026-08-29) — DONE
+- Google-login (Emergent OAuth) protected dashboard at /admin. First login auto-becomes admin (or ADMIN_EMAILS allowlist).
+- Full editor for every homepage section: Settings, Social, Navigation, Hero, What We Do, How We Deliver, Experiences,
+  Why 7HUES, Our People, From The Road, Journal, Footer — all headings/paragraphs/CTA labels+URLs/images/videos.
+- Reusable field kit (Text/Area/Select/ImageInput/VideoInput/ListEditor with add/remove/reorder). Every image/video field
+  supports upload/replace (Emergent object storage) or paste-URL; external video URLs supported for performance.
+- Media Library tab (upload/list/soft-delete, copy URL). Bookings tab (view enquiries).
+- Save writes the whole content doc via PUT /api/content -> reflected live on the homepage. Verified 100% by testing agent (iteration_3).
 
 ## Notes
 - Hero video is a placeholder streaming URL; poster fallback ensures cinematic look. Replaceable via CMS.
