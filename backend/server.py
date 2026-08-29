@@ -126,8 +126,13 @@ async def get_current_user(request: Request, authorization: Optional[str] = Head
     return User(**user_doc)
 
 
+def is_admin_email(email: Optional[str]) -> bool:
+    return bool(email) and email.strip().lower() in ADMIN_EMAILS
+
+
 async def require_admin(user: Optional[User] = Depends(get_current_user)) -> User:
-    if not user or not user.is_admin:
+    # Admin access is controlled EXCLUSIVELY by the ADMIN_EMAILS allowlist.
+    if not user or not is_admin_email(user.email):
         raise HTTPException(status_code=403, detail="Admin access required")
     return user
 
@@ -146,9 +151,8 @@ async def process_session(request: Request, response: Response):
         raise HTTPException(status_code=401, detail="Invalid session")
     data = r.json()
     email = (data.get("email") or "").lower()
-    # First admin bootstrap: if no admins configured, first login becomes admin.
-    existing_admins = await db.users.count_documents({"is_admin": True})
-    is_admin = (email in ADMIN_EMAILS) or (len(ADMIN_EMAILS) == 0 and existing_admins == 0)
+    # Admin is determined ONLY by the explicit allowlist (no first-login bootstrap).
+    is_admin = is_admin_email(email)
 
     user_doc = await db.users.find_one({"email": email}, {"_id": 0})
     if user_doc:
@@ -156,9 +160,8 @@ async def process_session(request: Request, response: Response):
         await db.users.update_one(
             {"user_id": user_id},
             {"$set": {"name": data.get("name", ""), "picture": data.get("picture", ""),
-                      "is_admin": user_doc.get("is_admin", False) or is_admin}},
+                      "is_admin": is_admin}},
         )
-        is_admin = user_doc.get("is_admin", False) or is_admin
     else:
         user_id = f"user_{uuid.uuid4().hex[:12]}"
         await db.users.insert_one({
@@ -182,7 +185,8 @@ async def process_session(request: Request, response: Response):
 async def auth_me(user: Optional[User] = Depends(get_current_user)):
     if not user:
         raise HTTPException(status_code=401, detail="Not authenticated")
-    return user
+    # Always reflect the current allowlist, regardless of any stored flag.
+    return {**user.model_dump(), "is_admin": is_admin_email(user.email)}
 
 
 @api.post("/auth/logout")

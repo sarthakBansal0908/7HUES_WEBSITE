@@ -1,0 +1,24 @@
+{
+  "summary": "Verified the admin-allowlist bug fix end-to-end. Backend: 15/15 pytest tests pass proving ADMIN_EMAILS allowlist is the SOLE gate — allowlisted email 7huesexpeditions@gmail.com gets is_admin:true from /api/auth/me and 200 on PUT /api/content / GET /api/bookings / GET /api/media even though its stored is_admin flag is FALSE; a non-allowlisted email with stored is_admin:TRUE gets is_admin:false and 403 on all admin APIs. Public endpoints (GET /api/content, /api/health) remain public; unauth admin endpoints return 401/403. Frontend: injected session cookies (httpOnly, secure, sameSite=None) for both cases — /admin shows the full CMS Dashboard for 7huesexpeditions@gmail.com (sidebar tabs admin-tab-settings ... admin-tab-bookings, admin-save, admin-logout all rendered) and NOT AUTHORISED with the offending email for the non-allowlisted user. Unauthenticated /admin correctly shows the Login screen (google-signin). Homepage / still loads. Sessions and test users were cleaned up.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": { "ui_bugs": [], "integration_issues": [], "design_issues": [] },
+  "test_report_links": [
+    "/app/backend/tests/test_admin_allowlist.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "auth_testing.md still says 'First login becomes admin if ADMIN_EMAILS empty and no admin exists' — this bootstrap has been intentionally removed from server.py. Update the playbook to remove that line to prevent future confusion.",
+    "server.py is_admin_email() uses `bool(email) and email.strip().lower() in ADMIN_EMAILS` which returns a bool via short-circuit — correct; just noting there's no explicit lowercase normalization on ADMIN_EMAILS beyond load time (already lowercased at import — fine).",
+    "process_session() writes is_admin into the users doc but /auth/me + require_admin ignore it — so the stored field is dead state. Consider dropping the field on write or documenting it's for audit-only, otherwise it can mislead future readers.",
+    "server.py is a single 457-line file; still under the 700-line threshold but auth/media/content are ripe for module split as it grows."
+  ],
+  "updated_files": ["/app/backend/tests/test_admin_allowlist.py"],
+  "success_rate": { "backend": "100% (15/15)", "frontend": "100% (8/8 checks)" },
+  "test_credentials": "Emergent Google OAuth; no passwords. Admin allowlist email: 7huesexpeditions@gmail.com. Sessions injected via Mongo db 'sevenhues' (users + user_sessions) per /app/auth_testing.md.",
+  "seed_data_creation": "Temporarily injected two Mongo users + sessions (7huesexpeditions@gmail.com with is_admin=false; random.person.test@gmail.com with is_admin=true). All cleaned up after the run — verified 0 admin/test docs remain.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Regression suite for the allowlist fix lives at /app/backend/tests/test_admin_allowlist.py — run with `REACT_APP_BACKEND_URL=<preview-url> pytest backend/tests/test_admin_allowlist.py -v`. It self-seeds and self-cleans Mongo. If ADMIN_EMAILS in backend/.env changes, update ADMIN_EMAIL constant in the test.",
+  "rca of the issue": "Original bug: because the earlier code granted admin to 'first login when no admin exists', a testing agent's throwaway Google account had been promoted to admin, and 7huesexpeditions@gmail.com (the real owner) then hit require_admin -> 403 -> 'NOT AUTHORISED'. Fix (verified): server.py now derives is_admin exclusively from ADMIN_EMAILS via is_admin_email(); both /auth/me and require_admin recompute from the allowlist and ignore the stored users.is_admin flag; process_session() no longer bootstraps first login. Verified positive (allowlisted access works) and negative (stale stored admin flag cannot bypass) at both API and UI layers."
+}
