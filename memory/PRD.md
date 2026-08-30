@@ -56,6 +56,14 @@ Logo: /logo.png (circular 7HUES road-mark). Motorcycle marker: /moto.png (green-
 
 ## Notes
 - Hero video is a placeholder streaming URL; poster fallback ensures cinematic look. Replaceable via CMS.
+
+## Redesign Pass 2 (2026-08-29) — clean professional layout (road removed)
+- Per user feedback, REMOVED the winding road + motorcycle from the homepage (was causing awkward empty space).
+- Rebuilt as one continuous warm cream canvas with UNIFORM vertical rhythm (py-24 md:py-32, max-w-[1400px]) via shared SectionHeader.
+- Section order: 01 ABOUT US (intro + 4-person team), 02 WHAT WE DO? (image + 3 differentiators), 03 HOW WE DELIVER? (clean 4-col SOP grid), 04 WHY 7HUES? (balanced image + 4 points), 05 EXPERIENCES (Lusion-style 2-col staggered catalogue grid: image + tags + big title, no CTA), 06 FROM THE ROAD (3 external post links), 07 JOURNAL (3 stories).
+- Hero cleaned earlier (no play/progress); mobile headline size reduced to avoid CTA overlap.
+- New CMS-editable fields: about.team/team_title, what_we_do.points, experiences.items {title,tags,image}. Admin editors updated.
+- Verified by testing agent iteration_6: 100% of 14 acceptance checks on desktop (1440) + mobile (390); road/bike fully gone; no empty-half issues; booking regression passes.
 - Screenshot tool is flaky on this page (looping video keeps network busy); rely on testing agent for verification.
 
 ## Refinement Pass 1 (2026-08-27) — homepage art direction

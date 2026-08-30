@@ -347,6 +347,13 @@ def default_content() -> Dict[str, Any]:
             "cta_label": "BEGIN THE JOURNEY",
             "cta_href": "/book",
             "image": "https://images.unsplash.com/photo-1598683308075-3ec9bc7e54e0?crop=entropy&cs=srgb&fm=jpg&q=85&w=1400",
+            "team_title": "THE PEOPLE BEHIND THE RIDES",
+            "team": [
+                {"name": "Arjun Mehra", "role": "Founder & Lead Rider", "image": "https://images.unsplash.com/photo-1718814457409-0d91c163739c?crop=entropy&cs=srgb&fm=jpg&q=85&w=500"},
+                {"name": "Kabir Rao", "role": "Route & Logistics", "image": "https://images.unsplash.com/photo-1752778312055-3b7798f167b1?crop=entropy&cs=srgb&fm=jpg&q=85&w=500"},
+                {"name": "Meera Nair", "role": "Experience Curator", "image": "https://images.unsplash.com/photo-1748943490522-83785be71c26?crop=entropy&cs=srgb&fm=jpg&q=85&w=500"},
+                {"name": "Devan Iyer", "role": "Films & Photography", "image": "https://images.unsplash.com/photo-1657280846596-2d27d1533249?crop=entropy&cs=srgb&fm=jpg&q=85&w=500"},
+            ],
         },
         "what_we_do": {
             "index": "02",
@@ -355,6 +362,11 @@ def default_content() -> Dict[str, Any]:
             "cta_label": "EXPLORE EXPEDITIONS",
             "cta_href": "/expeditions",
             "image": "https://images.unsplash.com/photo-1661318977466-5fbd41d8ed83?crop=entropy&cs=srgb&fm=jpg&q=85&w=1600",
+            "points": [
+                {"title": "Expedition-first, not tourism", "body": "Routes built around experience, not checklists."},
+                {"title": "Crafted end to end", "body": "Roads, stays, food and stories, curated as one."},
+                {"title": "Captured cinematically", "body": "Every journey documented in film and photography."},
+            ],
         },
         "how_we_deliver": {
             "index": "03",
@@ -368,16 +380,15 @@ def default_content() -> Dict[str, Any]:
         },
         "experiences": {
             "index": "05",
-            "title": "EXPERIENCE",
-            "intro": "Five threads of a single journey — the ride, the land, the nights, the people and the stories you carry home.",
-            "cta_label": "DISCOVER THE EXPERIENCE",
-            "cta_href": "/experiences",
+            "title": "EXPERIENCES",
+            "intro": "A catalogue of everything a 7HUES expedition is made of.",
             "items": [
-                {"label": "THE RIDE", "image": "https://images.unsplash.com/photo-1610950486363-3dbb1c29320c?crop=entropy&cs=srgb&fm=jpg&q=85&w=1600"},
-                {"label": "THE PLACES", "image": "https://images.unsplash.com/photo-1705219310890-873721b9b122?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
-                {"label": "THE STAYS", "image": "https://images.unsplash.com/photo-1757838814382-b0034fcc30f0?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
-                {"label": "THE PEOPLE", "image": "https://images.unsplash.com/photo-1609788063095-d71bf3c1f01f?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
-                {"label": "THE STORIES", "image": "https://images.unsplash.com/photo-1667862224967-a25abfb769a1?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
+                {"title": "The Ride", "tags": "ROADS • PASSES • TERRAIN", "image": "https://images.unsplash.com/photo-1610950486363-3dbb1c29320c?crop=entropy&cs=srgb&fm=jpg&q=85&w=1400"},
+                {"title": "The Places", "tags": "VALLEYS • DESERTS • PEAKS", "image": "https://images.unsplash.com/photo-1705219310890-873721b9b122?crop=entropy&cs=srgb&fm=jpg&q=85&w=1400"},
+                {"title": "The Stays", "tags": "CAMPS • HERITAGE • BOUTIQUE", "image": "https://images.unsplash.com/photo-1757838814382-b0034fcc30f0?crop=entropy&cs=srgb&fm=jpg&q=85&w=1400"},
+                {"title": "The People", "tags": "RIDERS • LOCALS • FRIENDS", "image": "https://images.unsplash.com/photo-1609788063095-d71bf3c1f01f?crop=entropy&cs=srgb&fm=jpg&q=85&w=1400"},
+                {"title": "The Stories", "tags": "FILM • PHOTOS • JOURNALS", "image": "https://images.unsplash.com/photo-1667862224967-a25abfb769a1?crop=entropy&cs=srgb&fm=jpg&q=85&w=1400"},
+                {"title": "The Culture", "tags": "FOOD • RITUAL • CRAFT", "image": "https://images.unsplash.com/photo-1666907418714-1b5f85aaf146?crop=entropy&cs=srgb&fm=jpg&q=85&w=1400"},
             ],
         },
         "why": {

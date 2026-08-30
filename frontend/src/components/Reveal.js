@@ -16,6 +16,21 @@ export default function Reveal({ children, delay = 0, y = 40, className = '', ..
   );
 }
 
+export function SectionHeader({ index, title, subtitle, align = 'left', light = false }) {
+  const center = align === 'center';
+  return (
+    <Reveal className={`mb-12 md:mb-16 ${center ? 'text-center mx-auto max-w-3xl' : 'max-w-3xl'}`}>
+      {index && <span className="font-mono text-gold text-sm block mb-4">{index}</span>}
+      <h2 className={`headline text-5xl md:text-6xl lg:text-7xl ${light ? 'text-sand' : 'text-ink'}`}>{title}</h2>
+      {subtitle && (
+        <p className={`text-lg md:text-xl mt-6 max-w-2xl ${center ? 'mx-auto' : ''} ${light ? 'text-sand/70' : 'text-stone'}`}>
+          {subtitle}
+        </p>
+      )}
+    </Reveal>
+  );
+}
+
 export function MaskImage({ src, alt = '', className = '', imgClass = '', delay = 0 }) {
   return (
     <div className={`overflow-hidden ${className}`}>

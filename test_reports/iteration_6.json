@@ -1,0 +1,40 @@
+{
+  "summary": "Frontend-only regression of the 7HUES homepage POLISH iteration at REACT_APP_BACKEND_URL. Verified every acceptance criterion in the review request on desktop (1440x900) and mobile (390x844). Road SVG + motorcycle fully gone (no scroll-motorcycle testid, main is one continuous bg-sand rgb(236,228,214) canvas). Section order after hero is 01 ABOUT (with 4 team members) -> 02 WHAT WE DO (3 points) -> 03 HOW WE DELIVER (4 items in a single balanced desktop row, tops all 3671px, no giant center gap) -> 04 WHY 7HUES (balanced 2-col with image loaded natWidth=1400 + 4 why-items) -> 05 EXPERIENCES (2-col catalogue of 6 cards experience-0..5, staggered md:mt-20 on odd cards, rounded-2xl images, tag+title, NO experiences-cta and no experience-6) -> 06 FROM THE ROAD (3 posts, all <a target=_blank>) -> 07 JOURNAL (3 cards + journal-cta). Hero: hero-eyebrow + hero-book-cta present, play-showreel absent. No broken images (0 images with naturalWidth=0). No console errors, no page errors. Mobile: zero horizontal overflow (scrollW==clientW==390), menu-toggle opens mobile-menu, team grid becomes 2-up (rows share top), experience cards stack 1-up full width. Booking regression: /book form fills, POST /api/bookings -> 200 and booking-success rendered.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Mobile hero (390x844)", "issues": ["The 3-line headline 'NOT JUST A RIDE. AN EXPERIENCE YOU CARRY BACK.' wraps and the last line ('BACK.') visually collides with / sits behind the BOOK YOUR RIDE CTA — the CTA is faintly visible under the last line of text. Consider reducing hero headline size on <=390 breakpoint or adding a top margin/gap before the CTA button."]}
+    ]
+  },
+  "test_report_links": [
+    "/app/test_reports/i6_desktop_hero.png",
+    "/app/test_reports/i6_desktop_about.png",
+    "/app/test_reports/i6_desktop_deliver.png",
+    "/app/test_reports/i6_desktop_why.png",
+    "/app/test_reports/i6_desktop_exp.png",
+    "/app/test_reports/i6_desktop_journal.png",
+    "/app/test_reports/i6_mobile_hero.png",
+    "/app/test_reports/i6_mobile_deliver.png",
+    "/app/test_reports/i6_mobile_exp.png"
+  ],
+  "action_items": [
+    "(Minor / polish only) Fix mobile hero headline overlapping the BOOK YOUR RIDE CTA at 390px — reduce font-size or add explicit margin between last headline line and the CTA."
+  ],
+  "critical_code_review_comments": [
+    "HowWeDeliver items no longer collapse into a 2-column layout on desktop (grid-cols-1 sm:grid-cols-2 lg:grid-cols-4) — good. Verified all 4 tops equal 3671px at 1440 width, so the previous 'huge empty middle' complaint is resolved.",
+    "WhyHues uses lg:grid-cols-2 with items-center; on 1440 the image (aspect 4/5) and the 4 points fill both columns — no blank half. Note MaskImage uses feather class which relies on a mask-image; ensure that mask is applied only on md+ if a stronger visual is desired.",
+    "Experiences.js uses `i % 2 === 1 ? 'md:mt-20' : ''` for the Lusion stagger — nice, but the odd-column offset means the section's overall bottom padding on mobile is fine (mt-20 only at md+). Good.",
+    "FromTheRoad social-post-* anchors correctly use target=_blank; however href points to bare 'https://instagram.com/' / 'https://youtube.com/' (no rel=noopener seen in DOM). Recommend adding rel='noopener noreferrer' to all target=_blank links.",
+    "Home.js wraps sections in <main className='bg-sand'> — one continuous cream canvas confirmed (rgb(236,228,214)). Good regression guard."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped per request)", "frontend": "100% of the 14 acceptance checks pass; 1 minor mobile-hero design nit."},
+  "test_credentials": "None required — homepage + public /book flow.",
+  "seed_data_creation": "One TEST_regression booking POSTed via /api/bookings (200) during the regression check.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Homepage acceptance selectors: section-about, section-what-we-do, section-how-we-deliver, section-why, section-experiences, section-from-the-road, section-journal. Absent: scroll-motorcycle, experiences-cta, play-showreel, experience-6, section-people. Cards: team-member-0..3, whatwedo-point-0..2, deliver-item-0..3, why-item-0..3, experience-0..5, social-post-0..2, journal-card-0..2, journal-cta. Booking regression: /book -> booking-form -> field-name/phone/email/city/expedition/preferred_dates/motorcycle/experience/riders/message -> booking-submit -> booking-success + POST /api/bookings 200. Only outstanding polish nit is mobile hero headline vs BOOK YOUR RIDE overlap at 390px.",
+  "rca of the issue": "N/A — this iteration was a polish-verification pass. Every acceptance criterion in the review request passed; only a minor mobile-hero typography overlap remains."
+}

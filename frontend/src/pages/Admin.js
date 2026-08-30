@@ -113,6 +113,23 @@ function AboutEditor({ value = {}, onChange }) {
       </div>
       <Area label="Body" value={value.body} onChange={(v) => set({ body: v })} />
       <ImageInput label="Image" value={value.image} onChange={(v) => set({ image: v })} />
+      <Text label="Team heading" value={value.team_title} onChange={(v) => set({ team_title: v })} />
+      <ListEditor
+        label="Team members"
+        items={value.team}
+        onChange={(team) => set({ team })}
+        blank={{ name: '', role: '', image: '' }}
+        addLabel="Add team member"
+        renderItem={(it, up) => (
+          <div className="space-y-4">
+            <div className="grid md:grid-cols-2 gap-4">
+              <Text label="Name" value={it.name} onChange={(v) => up({ ...it, name: v })} />
+              <Text label="Role" value={it.role} onChange={(v) => up({ ...it, role: v })} />
+            </div>
+            <ImageInput label="Photo" value={it.image} onChange={(v) => up({ ...it, image: v })} />
+          </div>
+        )}
+      />
     </div>
   );
 }
@@ -129,6 +146,19 @@ function WhatWeDoEditor({ value = {}, onChange }) {
       </div>
       <Area label="Body" value={value.body} onChange={(v) => set({ body: v })} />
       <ImageInput label="Image" value={value.image} onChange={(v) => set({ image: v })} />
+      <ListEditor
+        label="Differentiators"
+        items={value.points}
+        onChange={(points) => set({ points })}
+        blank={{ title: '', body: '' }}
+        addLabel="Add point"
+        renderItem={(it, up) => (
+          <div className="grid md:grid-cols-2 gap-4">
+            <Text label="Title" value={it.title} onChange={(v) => up({ ...it, title: v })} />
+            <Text label="Body" value={it.body} onChange={(v) => up({ ...it, body: v })} />
+          </div>
+        )}
+      />
     </div>
   );
 }
@@ -166,19 +196,20 @@ function ExperiencesEditor({ value = {}, onChange }) {
       <div className="grid md:grid-cols-2 gap-6">
         <Text label="Index" value={value.index} onChange={(v) => set({ index: v })} />
         <Text label="Title" value={value.title} onChange={(v) => set({ title: v })} />
-        <Text label="CTA label" value={value.cta_label} onChange={(v) => set({ cta_label: v })} />
-        <Text label="CTA link" value={value.cta_href} onChange={(v) => set({ cta_href: v })} />
       </div>
       <Area label="Intro" value={value.intro} onChange={(v) => set({ intro: v })} />
       <ListEditor
-        label="Experience tiles"
+        label="Catalogue cards"
         items={value.items}
         onChange={(items) => set({ items })}
-        blank={{ label: 'NEW', image: '' }}
-        addLabel="Add experience"
+        blank={{ title: '', tags: '', image: '' }}
+        addLabel="Add card"
         renderItem={(it, up) => (
-          <div className="grid md:grid-cols-2 gap-4">
-            <Text label="Label" value={it.label} onChange={(v) => up({ ...it, label: v })} />
+          <div className="space-y-4">
+            <div className="grid md:grid-cols-2 gap-4">
+              <Text label="Title" value={it.title} onChange={(v) => up({ ...it, title: v })} />
+              <Text label="Tags (• separated)" value={it.tags} onChange={(v) => up({ ...it, tags: v })} />
+            </div>
             <ImageInput label="Image" value={it.image} onChange={(v) => up({ ...it, image: v })} />
           </div>
         )}

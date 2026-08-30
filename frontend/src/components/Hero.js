@@ -32,7 +32,7 @@ export default function Hero({ content }) {
           {hero.eyebrow}
         </motion.p>
 
-        <h1 className="headline text-white text-[13vw] leading-[0.9] sm:text-[10vw] md:text-[7.5vw] lg:text-[6vw] max-w-[15ch]">
+        <h1 className="headline text-white text-[10vw] leading-[0.95] sm:text-[9vw] md:text-[7.5vw] lg:text-[6vw] max-w-[15ch]">
           {[hero.line1, hero.line2, hero.line3].filter(Boolean).map((line, i) => (
             <span key={i} className="block overflow-hidden py-[0.05em]">
               <motion.span
@@ -51,7 +51,7 @@ export default function Hero({ content }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.1, duration: 0.8 }}
-          className="mt-12"
+          className="mt-10 md:mt-12"
         >
           <Link
             to={hero.cta_href || '/book'}

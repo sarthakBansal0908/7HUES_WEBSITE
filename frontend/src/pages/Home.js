@@ -2,7 +2,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
-import RoadJourney from '../components/RoadJourney';
 import Footer from '../components/Footer';
 import About from '../components/sections/About';
 import WhatWeDo from '../components/sections/WhatWeDo';
@@ -14,7 +13,6 @@ import Journal from '../components/sections/Journal';
 
 export default function Home({ content }) {
   if (!content) return null;
-  const settings = content.settings || {};
 
   return (
     <div className="grain">
@@ -26,18 +24,16 @@ export default function Home({ content }) {
       <Navbar content={content} />
       <Hero content={content} />
 
-      {/* One continuous warm canvas — hard cut from the hero, no gradient transition */}
-      <div className="relative bg-sand">
-        <RoadJourney motorcycle={settings.motorcycle}>
-          <About data={content.about} />
-          <WhatWeDo data={content.what_we_do} />
-          <HowWeDeliver data={content.how_we_deliver} />
-          <WhyHues data={content.why} />
-          <Experiences data={content.experiences} />
-          <FromTheRoad data={content.from_the_road} />
-          <Journal data={content.journal} />
-        </RoadJourney>
-      </div>
+      {/* One continuous warm canvas with uniform vertical rhythm */}
+      <main className="bg-sand">
+        <About data={content.about} />
+        <WhatWeDo data={content.what_we_do} />
+        <HowWeDeliver data={content.how_we_deliver} />
+        <WhyHues data={content.why} />
+        <Experiences data={content.experiences} />
+        <FromTheRoad data={content.from_the_road} />
+        <Journal data={content.journal} />
+      </main>
 
       <Footer content={content} />
     </div>
