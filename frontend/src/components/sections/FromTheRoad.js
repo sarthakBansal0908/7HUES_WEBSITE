@@ -7,7 +7,8 @@ export default function FromTheRoad({ data }) {
   return (
     <section data-testid="section-from-the-road" className="py-24 md:py-36">
       <div className="mx-auto max-w-[1600px] px-6 md:px-10">
-        <Reveal className="flex items-end justify-between mb-14">
+        <Reveal className="mb-14 lg:w-1/2">
+          {data.index && <span className="font-mono text-gold text-sm block mb-6">{data.index}</span>}
           <h2 className="headline text-5xl md:text-7xl text-ink">{data.title}</h2>
         </Reveal>
 

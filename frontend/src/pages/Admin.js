@@ -101,6 +101,22 @@ function HeroEditor({ value = {}, onChange }) {
   );
 }
 
+function AboutEditor({ value = {}, onChange }) {
+  const set = patcher(value, onChange);
+  return (
+    <div className="space-y-6">
+      <div className="grid md:grid-cols-2 gap-6">
+        <Text label="Index" value={value.index} onChange={(v) => set({ index: v })} />
+        <Text label="Title" value={value.title} onChange={(v) => set({ title: v })} />
+        <Text label="CTA label" value={value.cta_label} onChange={(v) => set({ cta_label: v })} />
+        <Text label="CTA link" value={value.cta_href} onChange={(v) => set({ cta_href: v })} />
+      </div>
+      <Area label="Body" value={value.body} onChange={(v) => set({ body: v })} />
+      <ImageInput label="Image" value={value.image} onChange={(v) => set({ image: v })} />
+    </div>
+  );
+}
+
 function WhatWeDoEditor({ value = {}, onChange }) {
   const set = patcher(value, onChange);
   return (
@@ -153,6 +169,7 @@ function ExperiencesEditor({ value = {}, onChange }) {
         <Text label="CTA label" value={value.cta_label} onChange={(v) => set({ cta_label: v })} />
         <Text label="CTA link" value={value.cta_href} onChange={(v) => set({ cta_href: v })} />
       </div>
+      <Area label="Intro" value={value.intro} onChange={(v) => set({ intro: v })} />
       <ListEditor
         label="Experience tiles"
         items={value.items}
@@ -178,6 +195,7 @@ function WhyEditor({ value = {}, onChange }) {
         <Text label="Index" value={value.index} onChange={(v) => set({ index: v })} />
         <Text label="Title" value={value.title} onChange={(v) => set({ title: v })} />
       </div>
+      <ImageInput label="Section image" value={value.image} onChange={(v) => set({ image: v })} />
       <ListEditor
         label="Reasons"
         items={value.items}
@@ -395,6 +413,7 @@ const SECTIONS = [
   { id: 'social', label: 'Social Links', key: 'social', C: SocialEditor },
   { id: 'nav', label: 'Navigation', key: 'nav', C: NavEditor },
   { id: 'hero', label: 'Hero / Showreel', key: 'hero', C: HeroEditor },
+  { id: 'about', label: 'About Us', key: 'about', C: AboutEditor },
   { id: 'what', label: 'What We Do', key: 'what_we_do', C: WhatWeDoEditor },
   { id: 'deliver', label: 'How We Deliver', key: 'how_we_deliver', C: DeliverEditor },
   { id: 'exp', label: 'Experiences', key: 'experiences', C: ExperiencesEditor },

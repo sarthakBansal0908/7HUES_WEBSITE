@@ -340,17 +340,25 @@ def default_content() -> Dict[str, Any]:
             "cta_label": "BOOK YOUR RIDE",
             "cta_href": "/book",
         },
-        "what_we_do": {
+        "about": {
             "index": "01",
-            "title": "WHAT WE DO",
+            "title": "ABOUT US",
+            "body": "7HUES began with a simple belief — that the best journeys are lived, not booked.\nWe design motorcycle expeditions for people who want the road to mean something.",
+            "cta_label": "BEGIN THE JOURNEY",
+            "cta_href": "/book",
+            "image": "https://images.unsplash.com/photo-1598683308075-3ec9bc7e54e0?crop=entropy&cs=srgb&fm=jpg&q=85&w=1400",
+        },
+        "what_we_do": {
+            "index": "02",
+            "title": "WHAT WE DO?",
             "body": "We curate motorcycle expeditions across extraordinary landscapes — combining roads, stays, people, culture and stories into journeys worth carrying home.",
             "cta_label": "EXPLORE EXPEDITIONS",
             "cta_href": "/expeditions",
             "image": "https://images.unsplash.com/photo-1661318977466-5fbd41d8ed83?crop=entropy&cs=srgb&fm=jpg&q=85&w=1600",
         },
         "how_we_deliver": {
-            "index": "02",
-            "title": "HOW WE DELIVER",
+            "index": "03",
+            "title": "HOW WE DELIVER?",
             "items": [
                 {"icon": "route", "title": "CURATED ROUTES", "body": "Scenic, raw and memorable roads."},
                 {"icon": "shield", "title": "EXPERT SUPPORT", "body": "Experienced ride leaders, backup support and mechanics."},
@@ -359,28 +367,28 @@ def default_content() -> Dict[str, Any]:
             ],
         },
         "experiences": {
-            "index": "03",
-            "title": "EXPERIENCES",
+            "index": "05",
+            "title": "EXPERIENCE",
+            "intro": "Five threads of a single journey — the ride, the land, the nights, the people and the stories you carry home.",
             "cta_label": "DISCOVER THE EXPERIENCE",
             "cta_href": "/experiences",
             "items": [
-                {"label": "RIDE", "image": "https://images.unsplash.com/photo-1610950486363-3dbb1c29320c?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
-                {"label": "EXPLORE", "image": "https://images.unsplash.com/photo-1705219310890-873721b9b122?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
-                {"label": "STAY", "image": "https://images.unsplash.com/photo-1757838814382-b0034fcc30f0?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
-                {"label": "CONNECT", "image": "https://images.unsplash.com/photo-1609788063095-d71bf3c1f01f?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
-                {"label": "DISCOVER", "image": "https://images.unsplash.com/photo-1666907418714-1b5f85aaf146?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
-                {"label": "CREATE", "image": "https://images.unsplash.com/photo-1667862224967-a25abfb769a1?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
+                {"label": "THE RIDE", "image": "https://images.unsplash.com/photo-1610950486363-3dbb1c29320c?crop=entropy&cs=srgb&fm=jpg&q=85&w=1600"},
+                {"label": "THE PLACES", "image": "https://images.unsplash.com/photo-1705219310890-873721b9b122?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
+                {"label": "THE STAYS", "image": "https://images.unsplash.com/photo-1757838814382-b0034fcc30f0?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
+                {"label": "THE PEOPLE", "image": "https://images.unsplash.com/photo-1609788063095-d71bf3c1f01f?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
+                {"label": "THE STORIES", "image": "https://images.unsplash.com/photo-1667862224967-a25abfb769a1?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"},
             ],
         },
         "why": {
             "index": "04",
-            "title": "WHY 7HUES",
+            "title": "WHY 7HUES?",
+            "image": "https://images.unsplash.com/photo-1552306062-29a5560e1c31?crop=entropy&cs=srgb&fm=jpg&q=85&w=1400",
             "items": [
                 {"title": "SMALL GROUPS", "body": "More connection. More attention."},
                 {"title": "AUTHENTIC EXPERIENCES", "body": "Beyond tourist trails."},
-                {"title": "PREMIUM, NOT PRETENTIOUS", "body": "Beautiful experiences without unnecessary excess."},
+                {"title": "BEST VALUE", "body": "Premium experiences, honest pricing."},
                 {"title": "SAFETY FIRST", "body": "Planning and support throughout the journey."},
-                {"title": "STORIES WORTH KEEPING", "body": "Every expedition becomes part of your story."},
             ],
         },
         "people": {
@@ -402,6 +410,7 @@ def default_content() -> Dict[str, Any]:
             ],
         },
         "from_the_road": {
+            "index": "06",
             "title": "FROM THE ROAD",
             "posts": [
                 {"platform": "instagram", "title": "High passes, low light", "caption": "Somewhere above 4,000m.", "thumbnail": "https://images.unsplash.com/photo-1598683308075-3ec9bc7e54e0?crop=entropy&cs=srgb&fm=jpg&q=85&w=1000", "url": "https://instagram.com", "location": "Khardung La"},
@@ -410,7 +419,7 @@ def default_content() -> Dict[str, Any]:
             ],
         },
         "journal": {
-            "index": "06",
+            "index": "07",
             "title": "JOURNAL",
             "body": "Stories from the road.\nRaw moments.\nTimeless memories.",
             "cta_label": "EXPLORE JOURNAL",

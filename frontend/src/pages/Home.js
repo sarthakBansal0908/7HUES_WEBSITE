@@ -4,11 +4,11 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import RoadJourney from '../components/RoadJourney';
 import Footer from '../components/Footer';
+import About from '../components/sections/About';
 import WhatWeDo from '../components/sections/WhatWeDo';
 import HowWeDeliver from '../components/sections/HowWeDeliver';
-import Experiences from '../components/sections/Experiences';
 import WhyHues from '../components/sections/WhyHues';
-import People from '../components/sections/People';
+import Experiences from '../components/sections/Experiences';
 import FromTheRoad from '../components/sections/FromTheRoad';
 import Journal from '../components/sections/Journal';
 
@@ -20,21 +20,20 @@ export default function Home({ content }) {
     <div className="grain">
       <Helmet>
         <title>7HUES Expeditions — Not Just a Ride</title>
-        <meta name="description" content={content?.hero?.line1 + ' ' + content?.hero?.line2 + ' ' + content?.hero?.line3} />
+        <meta name="description" content={[content?.hero?.line1, content?.hero?.line2, content?.hero?.line3].filter(Boolean).join(' ')} />
       </Helmet>
 
       <Navbar content={content} />
       <Hero content={content} />
 
-      {/* Seamless transition from the dark hero into the paper journey */}
+      {/* One continuous warm canvas — hard cut from the hero, no gradient transition */}
       <div className="relative bg-sand">
-        <div className="h-28 md:h-44 bg-gradient-to-b from-charcoal to-sand" />
         <RoadJourney motorcycle={settings.motorcycle}>
+          <About data={content.about} />
           <WhatWeDo data={content.what_we_do} />
           <HowWeDeliver data={content.how_we_deliver} />
           <WhyHues data={content.why} />
           <Experiences data={content.experiences} />
-          <People data={content.people} />
           <FromTheRoad data={content.from_the_road} />
           <Journal data={content.journal} />
         </RoadJourney>

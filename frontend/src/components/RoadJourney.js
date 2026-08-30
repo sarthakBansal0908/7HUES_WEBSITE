@@ -13,7 +13,7 @@ import { prefersReducedMotion } from '../hooks/useLenis';
 */
 
 const PATH_D =
-  'M50,0 C26,55 10,120 34,200 C58,280 92,325 76,420 C60,515 10,560 22,655 C34,750 90,795 64,890 C50,955 50,980 50,1000';
+  'M50,0 C50,35 38,60 30,95 C22,130 70,150 72,235 C72,285 62,320 50,360 C38,405 26,455 26,500 C26,545 46,575 58,600 C68,625 82,650 82,680 C82,720 40,745 30,770 C22,800 62,835 70,855 C76,880 52,915 44,935 C40,960 48,985 50,1000';
 
 export default function RoadJourney({ motorcycle, children }) {
   const wrapRef = useRef(null);
