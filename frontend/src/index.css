@@ -74,6 +74,22 @@ body {
   letter-spacing: -0.015em;
 }
 
+/* Wide, immersive content shell — full page with modest side breathing room */
+.shell {
+  width: 100%;
+  max-width: 1840px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+@media (min-width: 768px) {
+  .shell { padding-left: 2.5rem; padding-right: 2.5rem; }
+}
+@media (min-width: 1280px) {
+  .shell { padding-left: 3.5rem; padding-right: 3.5rem; }
+}
+
 /* Organically feathered photography edges (like the reference) */
 .feather {
   -webkit-mask-image: radial-gradient(118% 128% at 50% 46%, #000 58%, rgba(0, 0, 0, 0) 94%);

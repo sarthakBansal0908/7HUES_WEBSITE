@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { MotionConfig } from 'framer-motion';
 import './App.css';
 import { api } from './lib/api';
 import useLenis from './hooks/useLenis';
@@ -52,12 +53,14 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/*" element={<SiteShell />} />
-      </Routes>
-    </div>
+    <MotionConfig reducedMotion="user">
+      <div className="App">
+        <Routes>
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/*" element={<SiteShell />} />
+        </Routes>
+      </div>
+    </MotionConfig>
   );
 }
 

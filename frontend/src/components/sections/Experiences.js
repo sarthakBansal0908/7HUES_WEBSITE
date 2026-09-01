@@ -8,7 +8,7 @@ export default function Experiences({ data }) {
   const items = data.items || [];
   return (
     <section data-testid="section-experiences" className="py-24 md:py-32">
-      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+      <div className="shell">
         <SectionHeader index={data.index} title={data.title} subtitle={data.intro} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 md:gap-y-20">

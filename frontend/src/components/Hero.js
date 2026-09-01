@@ -21,7 +21,7 @@ export default function Hero({ content }) {
       <div className="absolute inset-0 bg-black/45" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/50" />
 
-      <div className="relative z-10 h-full mx-auto max-w-[1600px] px-6 md:px-10 flex flex-col justify-center">
+      <div className="relative z-10 h-full shell flex flex-col justify-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

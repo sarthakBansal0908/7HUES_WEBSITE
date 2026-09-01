@@ -19,7 +19,7 @@ export default function Footer({ content }) {
       {/* light, cinematic treatment — image stays visible */}
       <div className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/35 to-charcoal/45" />
 
-      <div className="relative z-10 mx-auto max-w-[1600px] w-full px-6 md:px-10 pt-40 md:pt-56">
+      <div className="relative z-10 shell w-full pt-40 md:pt-56">
         <h2 className="headline text-[14vw] md:text-[8vw] leading-[0.88]">
           {footer.statement_line1}
           <br />
@@ -36,7 +36,7 @@ export default function Footer({ content }) {
       </div>
 
       {/* slim closing bar */}
-      <div className="relative z-10 mx-auto max-w-[1600px] w-full px-6 md:px-10 pb-10 pt-24">
+      <div className="relative z-10 shell w-full pb-10 pt-24">
         <div className="border-t border-white/15 pt-8 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-6 order-2 md:order-1">
             {nav.map((item) => (

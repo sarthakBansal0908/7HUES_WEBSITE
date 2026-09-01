@@ -7,7 +7,7 @@ export default function FromTheRoad({ data }) {
   if (!data) return null;
   return (
     <section data-testid="section-from-the-road" className="py-24 md:py-32">
-      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+      <div className="shell">
         <SectionHeader index={data.index} title={data.title} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

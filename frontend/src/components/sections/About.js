@@ -8,7 +8,7 @@ export default function About({ data }) {
   if (!data) return null;
   return (
     <section data-testid="section-about" className="py-24 md:py-32">
-      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+      <div className="shell">
         <SectionHeader index={data.index} title={data.title} />
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">

@@ -66,6 +66,19 @@ Logo: /logo.png (circular 7HUES road-mark). Motorcycle marker: /moto.png (green-
 - Verified by testing agent iteration_6: 100% of 14 acceptance checks on desktop (1440) + mobile (390); road/bike fully gone; no empty-half issues; booking regression passes.
 - Screenshot tool is flaky on this page (looping video keeps network busy); rely on testing agent for verification.
 
+## Road + Motorcycle re-integration (2026-09-01) — DONE
+- User reversed the earlier removal and asked to bring back the road + bike, done properly.
+- `/app/frontend/src/components/RoadJourney.js` rewritten: SVG mountain-switchback path (viewBox 0 0 100 1200,
+  preserveAspectRatio="none") drawn behind ALL homepage sections in Home.js. Subtle asphalt band (ink @0.05) +
+  dashed centre lane marking (reads as a road, not a snake) + gold "travelled" trace that reveals with scroll.
+- Motorcycle rides ALONG the path via arc-length mapping of scroll progress (getPointAtLength) — truly follows the
+  road, not a linear glide. Heading = path tangent (atan2(dy,dx)+90, angular-smoothed) so the front wheel always
+  points the direction of travel; the bike naturally drifts off/back into view on long near-horizontal traverses.
+- New top-view ADV bike art generated (Gemini) + background cut out (PIL floodfill, thresh 60 + low-sat halo clean),
+  saved to /app/frontend/public/moto-top.png (front wheel points UP by default). Old front-view moto.png kept unused.
+- Responsive sizes: w-12 (mobile) / md:w-16 / lg:w-20. Hidden under prefers-reduced-motion (road still shows).
+- Verified via screenshot tool at multiple scroll positions (desktop) — path weaves, bike follows & rotates correctly.
+
 ## Refinement Pass 1 (2026-08-27) — homepage art direction
 - Motorcycle now MUCH smaller and glides at the viewport vertical centre while moving horizontally along the road (banks with direction). Road drifts far across the page horizontally, creating negative space.
 - Navbar trimmed to EXPERIENCES / INFO & FAQ / JOURNAL; more translucent over hero.

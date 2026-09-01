@@ -9,7 +9,7 @@ export default function HowWeDeliver({ data }) {
   if (!data) return null;
   return (
     <section data-testid="section-how-we-deliver" className="py-24 md:py-32">
-      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+      <div className="shell">
         <SectionHeader index={data.index} title={data.title} subtitle={data.intro} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-14">

@@ -10,6 +10,7 @@ import WhyHues from '../components/sections/WhyHues';
 import Experiences from '../components/sections/Experiences';
 import FromTheRoad from '../components/sections/FromTheRoad';
 import Journal from '../components/sections/Journal';
+import RoadJourney from '../components/RoadJourney';
 
 export default function Home({ content }) {
   if (!content) return null;
@@ -26,13 +27,15 @@ export default function Home({ content }) {
 
       {/* One continuous warm canvas with uniform vertical rhythm */}
       <main className="bg-sand">
-        <About data={content.about} />
-        <WhatWeDo data={content.what_we_do} />
-        <HowWeDeliver data={content.how_we_deliver} />
-        <WhyHues data={content.why} />
-        <Experiences data={content.experiences} />
-        <FromTheRoad data={content.from_the_road} />
-        <Journal data={content.journal} />
+        <RoadJourney motorcycle="/moto-top.png">
+          <About data={content.about} />
+          <WhatWeDo data={content.what_we_do} />
+          <HowWeDeliver data={content.how_we_deliver} />
+          <WhyHues data={content.why} />
+          <Experiences data={content.experiences} />
+          <FromTheRoad data={content.from_the_road} />
+          <Journal data={content.journal} />
+        </RoadJourney>
       </main>
 
       <Footer content={content} />

@@ -2,80 +2,89 @@ import React, { useRef, useEffect } from 'react';
 import { prefersReducedMotion } from '../hooks/useLenis';
 
 /*
-  Winding road (SVG viewBox 0 0 100 1000, preserveAspectRatio="none") spanning the
-  full journey height. The road drifts far across the page horizontally.
+  RoadJourney — a mountain-switchback road drawn behind the whole journey, with an
+  ADV motorcycle that rides ALONG the path as you scroll.
 
-  The motorcycle stays near the VERTICAL CENTRE of the viewport while scrolling and
-  glides horizontally, always sitting exactly on the road, banking subtly with the
-  road direction. Because a point (x,y) in the viewBox maps to left=x% / top=(y/1000)%
-  of the wrapper, and the bike's wrapper-top equals the viewport-centre offset, the
-  bike is guaranteed to sit on the road line.
+  How it works
+  - The road is an SVG path in viewBox space (0 0 100 1200), stretched over the full
+    height of the content (preserveAspectRatio="none"). It weaves like a real hill
+    road: diagonal traverses + hairpins, occasionally running near-horizontal so the
+    bike visibly drifts off/back into the viewport (like switchbacks).
+  - The bike position is driven by SCROLL PROGRESS mapped onto the path's arc length,
+    so it truly follows the road (not a linear glide). Its heading is the path tangent,
+    so the front wheel always points the way it's travelling.
+  - A gold "trace" reveals the travelled portion of the road as you go.
 */
 
-const PATH_D =
-  'M50,0 C50,35 38,60 30,95 C22,130 70,150 72,235 C72,285 62,320 50,360 C38,405 26,455 26,500 C26,545 46,575 58,600 C68,625 82,650 82,680 C82,720 40,745 30,770 C22,800 62,835 70,855 C76,880 52,915 44,935 C40,960 48,985 50,1000';
+const VBH = 1200; // viewBox height
+const PATH_D = [
+  'M50,0',
+  'C48,42 40,74 30,112',
+  'C18,158 20,196 36,212',
+  'C58,232 80,240 83,286',
+  'C86,336 68,360 50,382',
+  'C30,406 19,438 26,478',
+  'C33,520 60,530 66,572',
+  'C72,616 54,648 39,668',
+  'C21,692 15,728 29,762',
+  'C43,796 70,800 74,842',
+  'C78,886 53,910 45,946',
+  'C39,980 47,1002 50,1040',
+  'C52,1092 50,1150 50,1200',
+].join(' ');
 
 export default function RoadJourney({ motorcycle, children }) {
   const wrapRef = useRef(null);
   const pathRef = useRef(null);
-  const motoRef = useRef(null);
   const traceRef = useRef(null);
-  const samplesRef = useRef([]);
+  const motoRef = useRef(null);
   const reduced = prefersReducedMotion();
 
   useEffect(() => {
     const path = pathRef.current;
-    if (!path) return;
+    if (!path) return undefined;
 
     const total = path.getTotalLength();
-    const N = 300;
-    const samples = [];
-    for (let i = 0; i <= N; i++) {
-      const p = path.getPointAtLength((i / N) * total);
-      samples.push({ x: p.x, y: p.y });
-    }
-    samplesRef.current = samples;
-
     let raf = 0;
+    let smoothAngle = 180; // start heading downwards
+
     const update = () => {
       const wrap = wrapRef.current;
-      const moto = motoRef.current;
       if (!wrap) return;
       const rect = wrap.getBoundingClientRect();
+      const scrollY = window.scrollY || window.pageYOffset;
       const vh = window.innerHeight;
+      const wrapTop = rect.top + scrollY;
+      const wrapH = rect.height;
 
-      // wrapper-space y that currently sits at the viewport centre
-      let yc = vh / 2 - rect.top;
-      yc = Math.max(0, Math.min(rect.height, yc));
-      const frac = rect.height ? yc / rect.height : 0;
-      const targetY = frac * 1000;
+      // progress of the viewport centre through the section (0..1)
+      const denom = Math.max(1, wrapH - vh * 0.4);
+      let p = (scrollY + vh * 0.5 - wrapTop) / denom;
+      p = Math.max(0, Math.min(1, p));
 
-      const arr = samplesRef.current;
-      let idx = 0;
-      for (let i = 0; i < arr.length - 1; i++) {
-        if (arr[i].y <= targetY && arr[i + 1].y >= targetY) {
-          idx = i;
-          break;
-        }
-        if (i === arr.length - 2) idx = i;
-      }
-      const a = arr[idx];
-      const b = arr[Math.min(arr.length - 1, idx + 1)];
-      const t = b.y - a.y ? (targetY - a.y) / (b.y - a.y) : 0;
-      const x = a.x + (b.x - a.x) * t;
+      const pt = path.getPointAtLength(p * total);
+      const ahead = path.getPointAtLength(Math.min(total, p * total + 2));
 
-      const dxPx = ((b.x - a.x) / 100) * rect.width;
-      const dyPx = ((b.y - a.y) / 1000) * rect.height;
-      let angle = (Math.atan2(dxPx, Math.max(1, dyPx)) * 180) / Math.PI;
-      angle = Math.max(-26, Math.min(26, angle));
+      const width = rect.width;
+      const dxPx = ((ahead.x - pt.x) / 100) * width;
+      const dyPx = ((ahead.y - pt.y) / VBH) * wrapH;
 
+      // heading: bike art points UP by default, +90 makes it face travel direction
+      let angle = (Math.atan2(dyPx, dxPx) * 180) / Math.PI + 90;
+      // shortest-path angular smoothing to avoid jumps
+      let diff = angle - smoothAngle;
+      while (diff > 180) diff -= 360;
+      while (diff < -180) diff += 360;
+      smoothAngle += diff * 0.35;
+
+      const moto = motoRef.current;
       if (moto) {
-        moto.style.top = `${yc}px`;
-        moto.style.left = `${x}%`;
-        moto.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+        moto.style.top = `${(pt.y / VBH) * wrapH}px`;
+        moto.style.left = `${pt.x}%`;
+        moto.style.transform = `translate(-50%, -50%) rotate(${smoothAngle}deg)`;
       }
       if (traceRef.current) {
-        traceRef.current.style.strokeDashoffset = `${1 - Math.min(1, frac)}`;
+        traceRef.current.style.strokeDashoffset = `${1 - p}`;
       }
     };
 
@@ -98,36 +107,39 @@ export default function RoadJourney({ motorcycle, children }) {
     <div ref={wrapRef} className="relative w-full">
       <svg
         className="absolute inset-0 w-full h-full z-0 pointer-events-none"
-        viewBox="0 0 100 1000"
+        viewBox={`0 0 100 ${VBH}`}
         preserveAspectRatio="none"
         aria-hidden="true"
       >
+        {/* asphalt band — soft and subtle */}
         <path
           d={PATH_D}
           fill="none"
-          stroke="#a88151"
-          strokeOpacity="0.14"
-          strokeWidth="9"
+          stroke="#1A1A1A"
+          strokeOpacity="0.05"
+          strokeWidth="16"
           strokeLinecap="round"
+          strokeLinejoin="round"
           vectorEffect="non-scaling-stroke"
         />
+        {/* dashed centre lane marking — reads as a road, not a snake */}
         <path
-          ref={pathRef}
           d={PATH_D}
           fill="none"
-          stroke="#7a6a4f"
-          strokeOpacity="0.3"
+          stroke="#5C5C5C"
+          strokeOpacity="0.28"
           strokeWidth="1.5"
           strokeLinecap="round"
-          strokeDasharray="1 6"
+          strokeDasharray="2 9"
           vectorEffect="non-scaling-stroke"
         />
+        {/* travelled trace — warm gold reveal */}
         <path
           ref={traceRef}
           d={PATH_D}
           fill="none"
-          stroke="#a88151"
-          strokeOpacity="0.55"
+          stroke="#A88151"
+          strokeOpacity="0.5"
           strokeWidth="2"
           strokeLinecap="round"
           pathLength="1"
@@ -135,6 +147,8 @@ export default function RoadJourney({ motorcycle, children }) {
           strokeDashoffset="1"
           vectorEffect="non-scaling-stroke"
         />
+        {/* hidden geometry driver (same path) */}
+        <path ref={pathRef} d={PATH_D} fill="none" stroke="none" vectorEffect="non-scaling-stroke" />
       </svg>
 
       {!reduced && motorcycle && (
@@ -146,8 +160,8 @@ export default function RoadJourney({ motorcycle, children }) {
         >
           <img
             src={motorcycle}
-            alt="7HUES motorcycle travelling the route"
-            className="w-6 sm:w-6 md:w-7 lg:w-8 h-auto drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)]"
+            alt="7HUES ADV motorcycle riding the route"
+            className="w-12 md:w-16 lg:w-20 h-auto drop-shadow-[0_12px_22px_rgba(0,0,0,0.28)]"
           />
         </div>
       )}

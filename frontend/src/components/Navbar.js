@@ -29,7 +29,7 @@ export default function Navbar({ content }) {
             : 'bg-gradient-to-b from-black/35 to-transparent'
         }`}
       >
-        <div className="mx-auto max-w-[1600px] px-6 md:px-10 h-20 flex items-center justify-between">
+        <div className="shell h-20 flex items-center justify-between">
           <Link to="/" data-testid="logo-link" className="flex items-center gap-3 group">
             <img
               src={settings.logo}
