@@ -105,3 +105,10 @@ Logo: /logo.png (circular 7HUES road-mark). Motorcycle marker: /moto.png (green-
 - Warmer paper background (#ECE4D6). Added feathered/organically-masked photography (.feather) on key images; larger, more asymmetric compositions.
 - Seamless dark-hero → paper-journey transition band. Cinematic image-driven footer (lighter overlay, photo visible).
 - Verified by testing agent iteration_2 (frontend 90%; only nit was bike size, since reduced).
+
+## Brand wordmark image (2026-09-01) — DONE
+- Added CMS field settings.brand_image (Site Settings tab, ImageInput). When set, it REPLACES the brand text
+  ("7HUES / EXPEDITIONS") in the header (desktop + mobile menu) and the footer bottom bar; text remains the fallback.
+- Rendered via <img class="h-9/h-8 w-auto object-contain"> (data-testid brand-wordmark-header / -footer). Circular
+  logo (settings.logo) kept alongside. Backend already persists arbitrary settings keys ($set). Verified end-to-end
+  by temporarily injecting an image (swap confirmed), then reverting to empty.

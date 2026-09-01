@@ -36,14 +36,23 @@ export default function Navbar({ content }) {
               alt={`${settings.brand_name || '7HUES'} logo`}
               className="h-11 w-11 rounded-full object-cover"
             />
-            <span className="hidden sm:flex flex-col leading-none text-white">
-              <span className="font-display font-700 text-lg tracking-[0.25em]">
-                {settings.brand_name || '7HUES'}
+            {settings.brand_image ? (
+              <img
+                src={settings.brand_image}
+                alt={`${settings.brand_name || '7HUES'} ${settings.brand_suffix || ''}`.trim()}
+                data-testid="brand-wordmark-header"
+                className="hidden sm:block h-9 w-auto object-contain"
+              />
+            ) : (
+              <span className="hidden sm:flex flex-col leading-none text-white">
+                <span className="font-display font-700 text-lg tracking-[0.25em]">
+                  {settings.brand_name || '7HUES'}
+                </span>
+                <span className="font-display text-[0.6rem] tracking-[0.42em] text-white/70">
+                  {settings.brand_suffix || 'EXPEDITIONS'}
+                </span>
               </span>
-              <span className="font-display text-[0.6rem] tracking-[0.42em] text-white/70">
-                {settings.brand_suffix || 'EXPEDITIONS'}
-              </span>
-            </span>
+            )}
           </Link>
 
           <nav className="hidden lg:flex items-center gap-9">
@@ -90,7 +99,11 @@ export default function Navbar({ content }) {
             className="fixed inset-0 z-[70] bg-charcoal text-white flex flex-col"
           >
             <div className="h-20 px-6 flex items-center justify-between border-b border-white/10">
-              <span className="font-display tracking-[0.3em]">{settings.brand_name || '7HUES'}</span>
+              {settings.brand_image ? (
+                <img src={settings.brand_image} alt={settings.brand_name || '7HUES'} className="h-8 w-auto object-contain" />
+              ) : (
+                <span className="font-display tracking-[0.3em]">{settings.brand_name || '7HUES'}</span>
+              )}
               <button data-testid="menu-close" aria-label="Close menu" onClick={() => setOpen(false)} className="p-2">
                 <X size={26} />
               </button>

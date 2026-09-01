@@ -48,7 +48,16 @@ export default function Footer({ content }) {
 
           <Link to="/" className="flex items-center gap-3 order-1 md:order-2">
             <img src={settings.logo} alt="7HUES" className="h-12 w-12 rounded-full" />
-            <span className="font-display tracking-[0.25em] text-lg">{settings.brand_name}</span>
+            {settings.brand_image ? (
+              <img
+                src={settings.brand_image}
+                alt={settings.brand_name || '7HUES'}
+                data-testid="brand-wordmark-footer"
+                className="h-8 w-auto object-contain"
+              />
+            ) : (
+              <span className="font-display tracking-[0.25em] text-lg">{settings.brand_name}</span>
+            )}
           </Link>
 
           <div className="flex gap-4 order-3">

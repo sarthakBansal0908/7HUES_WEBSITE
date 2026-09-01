@@ -43,7 +43,14 @@ function SettingsEditor({ value = {}, onChange }) {
     <div className="grid md:grid-cols-2 gap-6">
       <Text label="Brand name" value={value.brand_name} onChange={(v) => set({ brand_name: v })} />
       <Text label="Brand suffix" value={value.brand_suffix} onChange={(v) => set({ brand_suffix: v })} />
-      <ImageInput label="Logo" value={value.logo} onChange={(v) => set({ logo: v })} />
+      <div className="md:col-span-2">
+        <ImageInput
+          label="Brand wordmark image — replaces the brand text in the header & footer (upload a transparent PNG/SVG of your logotype). Leave empty to use the text above."
+          value={value.brand_image}
+          onChange={(v) => set({ brand_image: v })}
+        />
+      </div>
+      <ImageInput label="Logo (circular mark)" value={value.logo} onChange={(v) => set({ logo: v })} />
       <ImageInput label="Motorcycle marker (transparent PNG)" value={value.motorcycle} onChange={(v) => set({ motorcycle: v })} />
       <Text label="Contact email" value={value.contact_email} onChange={(v) => set({ contact_email: v })} />
       <Text label="WhatsApp number" value={value.whatsapp} onChange={(v) => set({ whatsapp: v })} />
