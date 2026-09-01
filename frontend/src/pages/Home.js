@@ -25,9 +25,9 @@ export default function Home({ content }) {
       <Navbar content={content} />
       <Hero content={content} />
 
-      {/* One continuous warm canvas + cinematic footer, tied together by the road */}
-      <RoadJourney motorcycle="/moto-top.png">
-        <main>
+      {/* One continuous warm canvas with the road weaving through the sections */}
+      <main className="bg-sand">
+        <RoadJourney motorcycle="/moto-top.png">
           <About data={content.about} />
           <WhatWeDo data={content.what_we_do} />
           <HowWeDeliver data={content.how_we_deliver} />
@@ -35,9 +35,10 @@ export default function Home({ content }) {
           <Experiences data={content.experiences} />
           <FromTheRoad data={content.from_the_road} />
           <Journal data={content.journal} />
-        </main>
-        <Footer content={content} />
-      </RoadJourney>
+        </RoadJourney>
+      </main>
+
+      <Footer content={content} />
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function Footer({ content }) {
   const nav = content?.nav || [];
 
   return (
-    <footer data-testid="site-footer" className="relative text-sand overflow-hidden min-h-[80vh] flex flex-col justify-between">
+    <footer data-testid="site-footer" className="relative isolate text-sand overflow-hidden min-h-[80vh] flex flex-col justify-between">
       {/* cinematic road photograph */}
       <img
         src={footer.image}

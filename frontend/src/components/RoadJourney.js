@@ -89,23 +89,9 @@ export default function RoadJourney({ motorcycle, children }) {
 
       const moto = motoRef.current;
       if (moto) {
-        // When the bike reaches the footer it "arrives" and parks there, fully visible
-        // on top (z 20). Everywhere else it rides BEHIND content (z 0) in the negative space.
-        let topPx = (pt.y / VBH) * wrapH;
-        const footerEl = wrap.querySelector('footer');
-        let parked = false;
-        if (footerEl) {
-          const fr = footerEl.getBoundingClientRect();
-          const footerTop = fr.top + scrollY - wrapTop;
-          if (topPx >= footerTop - 40) {
-            parked = true;
-            topPx = footerTop + Math.min(fr.height * 0.42, 200);
-          }
-        }
-        moto.style.top = `${topPx}px`;
+        moto.style.top = `${(pt.y / VBH) * wrapH}px`;
         moto.style.left = `${pt.x}%`;
         moto.style.transform = `translate(-50%, -50%) rotate(${smoothAngle}deg)`;
-        moto.style.zIndex = parked ? '20' : '0';
       }
       if (traceRef.current) {
         traceRef.current.style.strokeDashoffset = `${1 - p}`;
@@ -128,7 +114,7 @@ export default function RoadJourney({ motorcycle, children }) {
   }, []);
 
   return (
-    <div ref={wrapRef} className="relative w-full bg-sand">
+    <div ref={wrapRef} className="relative w-full">
       <svg
         className="absolute inset-0 w-full h-full z-0 pointer-events-none"
         viewBox={`0 0 100 ${VBH}`}
@@ -180,7 +166,7 @@ export default function RoadJourney({ motorcycle, children }) {
           ref={motoRef}
           data-testid="scroll-motorcycle"
           className="absolute pointer-events-none will-change-transform"
-          style={{ left: '50%', top: '0px', zIndex: 0 }}
+          style={{ left: '50%', top: '0px', zIndex: 5 }}
         >
           <img
             src={motorcycle}

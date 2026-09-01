@@ -91,6 +91,13 @@ Logo: /logo.png (circular 7HUES road-mark). Motorcycle marker: /moto.png (green-
   the FRONT (z-index 20) and clamped clear of the bottom edge, so it parks FULLY visible on the cinematic footer
   (fixed the earlier half-cut bike at the main/footer boundary). Elsewhere it stays behind content (z 0).
 
+## Footer overlap fix v2 (2026-09-01) — DONE (final)
+- Reverted the footer-into-wrap restructure + the position "parking" (which made the bike jump to vertical in the
+  footer middle). Footer is back OUTSIDE the road wrap; main keeps bg-sand; bike keeps its natural motion/rotation.
+- Pure stacking fix: bike zIndex = 5; section content container is z-10; footer given `isolate` (own stacking context).
+  So the bike sits ABOVE the whole footer (fully visible at the footer's upper edge) but BELOW mid-section content
+  (stays behind photos/text in the middle). No reposition, no jump. Verified via screenshots (arrival + bottom).
+
 ## Refinement Pass 1 (2026-08-27) — homepage art direction
 - Motorcycle now MUCH smaller and glides at the viewport vertical centre while moving horizontally along the road (banks with direction). Road drifts far across the page horizontally, creating negative space.
 - Navbar trimmed to EXPERIENCES / INFO & FAQ / JOURNAL; more translucent over hero.
