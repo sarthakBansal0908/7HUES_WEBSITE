@@ -27,7 +27,7 @@ export default function Home({ content }) {
 
       {/* One continuous warm canvas + cinematic footer, tied together by the road */}
       <RoadJourney motorcycle="/moto-top.png">
-        <main className="bg-sand">
+        <main>
           <About data={content.about} />
           <WhatWeDo data={content.what_we_do} />
           <HowWeDeliver data={content.how_we_deliver} />

@@ -89,12 +89,19 @@ export default function RoadJourney({ motorcycle, children }) {
 
       const moto = motoRef.current;
       if (moto) {
-        // Near the end of the journey the bike arrives at the footer: bring it fully
-        // to the front (above content) and keep it clear of the very bottom edge so
-        // the whole bike is visible parked on the cinematic footer.
-        const parked = p >= 0.9;
+        // When the bike reaches the footer it "arrives" and parks there, fully visible
+        // on top (z 20). Everywhere else it rides BEHIND content (z 0) in the negative space.
         let topPx = (pt.y / VBH) * wrapH;
-        if (parked) topPx = Math.min(topPx, wrapH - 140);
+        const footerEl = wrap.querySelector('footer');
+        let parked = false;
+        if (footerEl) {
+          const fr = footerEl.getBoundingClientRect();
+          const footerTop = fr.top + scrollY - wrapTop;
+          if (topPx >= footerTop - 40) {
+            parked = true;
+            topPx = footerTop + Math.min(fr.height * 0.42, 200);
+          }
+        }
         moto.style.top = `${topPx}px`;
         moto.style.left = `${pt.x}%`;
         moto.style.transform = `translate(-50%, -50%) rotate(${smoothAngle}deg)`;
@@ -121,7 +128,7 @@ export default function RoadJourney({ motorcycle, children }) {
   }, []);
 
   return (
-    <div ref={wrapRef} className="relative w-full">
+    <div ref={wrapRef} className="relative w-full bg-sand">
       <svg
         className="absolute inset-0 w-full h-full z-0 pointer-events-none"
         viewBox={`0 0 100 ${VBH}`}
