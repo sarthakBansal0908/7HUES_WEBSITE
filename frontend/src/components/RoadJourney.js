@@ -47,6 +47,8 @@ export default function RoadJourney({ motorcycle, children }) {
     const total = path.getTotalLength();
     let raf = 0;
     let smoothAngle = 180; // start heading downwards
+    let lastP = 0;
+    let dir = 1; // 1 = scrolling down (face forward/down), -1 = scrolling up (face back/up)
 
     const update = () => {
       const wrap = wrapRef.current;
@@ -62,6 +64,12 @@ export default function RoadJourney({ motorcycle, children }) {
       let p = (scrollY + vh * 0.5 - wrapTop) / denom;
       p = Math.max(0, Math.min(1, p));
 
+      // scroll direction (debounced against jitter)
+      if (Math.abs(p - lastP) > 0.0004) {
+        dir = p > lastP ? 1 : -1;
+        lastP = p;
+      }
+
       const pt = path.getPointAtLength(p * total);
       const ahead = path.getPointAtLength(Math.min(total, p * total + 2));
 
@@ -69,13 +77,15 @@ export default function RoadJourney({ motorcycle, children }) {
       const dxPx = ((ahead.x - pt.x) / 100) * width;
       const dyPx = ((ahead.y - pt.y) / VBH) * wrapH;
 
-      // heading: bike art points UP by default, +90 makes it face travel direction
+      // heading: bike art points UP by default, +90 makes it face along the path.
+      // Flip 180 when riding UP the road so the front wheel leads the way it moves.
       let angle = (Math.atan2(dyPx, dxPx) * 180) / Math.PI + 90;
+      if (dir < 0) angle += 180;
       // shortest-path angular smoothing to avoid jumps
       let diff = angle - smoothAngle;
       while (diff > 180) diff -= 360;
       while (diff < -180) diff += 360;
-      smoothAngle += diff * 0.35;
+      smoothAngle += diff * 0.25;
 
       const moto = motoRef.current;
       if (moto) {
@@ -155,13 +165,13 @@ export default function RoadJourney({ motorcycle, children }) {
         <div
           ref={motoRef}
           data-testid="scroll-motorcycle"
-          className="absolute z-20 pointer-events-none will-change-transform"
+          className="absolute z-0 pointer-events-none will-change-transform"
           style={{ left: '50%', top: '0px' }}
         >
           <img
             src={motorcycle}
-            alt="7HUES ADV motorcycle riding the route"
-            className="w-12 md:w-16 lg:w-20 h-auto drop-shadow-[0_12px_22px_rgba(0,0,0,0.28)]"
+            alt="7HUES ADV motorcycle and rider on the route"
+            className="w-[40px] md:w-[52px] lg:w-[66px] h-auto drop-shadow-[0_12px_22px_rgba(0,0,0,0.28)]"
           />
         </div>
       )}

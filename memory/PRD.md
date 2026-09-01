@@ -79,6 +79,15 @@ Logo: /logo.png (circular 7HUES road-mark). Motorcycle marker: /moto.png (green-
 - Responsive sizes: w-12 (mobile) / md:w-16 / lg:w-20. Hidden under prefers-reduced-motion (road still shows).
 - Verified via screenshot tool at multiple scroll positions (desktop) — path weaves, bike follows & rotates correctly.
 
+## Road/bike refinements (2026-09-01) — DONE
+- Bike art now includes a RIDER (helmet + jacket + gloved hands on bars), top-down, matching illustration quality
+  (regenerated via Gemini on white bg, cut out with PIL floodfill). Saved to /app/frontend/public/moto-top.png.
+- Bike now rides BEHIND content: moved from z-20 to z-0 (below the z-10 content layer) so opaque photos/cards
+  occlude it and it only shows in the negative space — no longer steals attention or covers text/images.
+- Size reduced ~18%: w-[40px] / md:w-[52px] / lg:w-[66px].
+- Heading now respects scroll direction: faces DOWN when scrolling down (~166\u00b0) and flips to face UP when scrolling
+  up (~9\u00b0), via a debounced scroll-direction flag (+180 on reverse) with angular smoothing. Verified by screenshots.
+
 ## Refinement Pass 1 (2026-08-27) — homepage art direction
 - Motorcycle now MUCH smaller and glides at the viewport vertical centre while moving horizontally along the road (banks with direction). Road drifts far across the page horizontally, creating negative space.
 - Navbar trimmed to EXPERIENCES / INFO & FAQ / JOURNAL; more translucent over hero.
