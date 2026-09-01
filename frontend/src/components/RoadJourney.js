@@ -89,9 +89,16 @@ export default function RoadJourney({ motorcycle, children }) {
 
       const moto = motoRef.current;
       if (moto) {
-        moto.style.top = `${(pt.y / VBH) * wrapH}px`;
+        // Near the end of the journey the bike arrives at the footer: bring it fully
+        // to the front (above content) and keep it clear of the very bottom edge so
+        // the whole bike is visible parked on the cinematic footer.
+        const parked = p >= 0.9;
+        let topPx = (pt.y / VBH) * wrapH;
+        if (parked) topPx = Math.min(topPx, wrapH - 140);
+        moto.style.top = `${topPx}px`;
         moto.style.left = `${pt.x}%`;
         moto.style.transform = `translate(-50%, -50%) rotate(${smoothAngle}deg)`;
+        moto.style.zIndex = parked ? '20' : '0';
       }
       if (traceRef.current) {
         traceRef.current.style.strokeDashoffset = `${1 - p}`;
@@ -165,8 +172,8 @@ export default function RoadJourney({ motorcycle, children }) {
         <div
           ref={motoRef}
           data-testid="scroll-motorcycle"
-          className="absolute z-0 pointer-events-none will-change-transform"
-          style={{ left: '50%', top: '0px' }}
+          className="absolute pointer-events-none will-change-transform"
+          style={{ left: '50%', top: '0px', zIndex: 0 }}
         >
           <img
             src={motorcycle}

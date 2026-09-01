@@ -87,6 +87,9 @@ Logo: /logo.png (circular 7HUES road-mark). Motorcycle marker: /moto.png (green-
 - Size reduced ~18%: w-[40px] / md:w-[52px] / lg:w-[66px].
 - Heading now respects scroll direction: faces DOWN when scrolling down (~166\u00b0) and flips to face UP when scrolling
   up (~9\u00b0), via a debounced scroll-direction flag (+180 on reverse) with angular smoothing. Verified by screenshots.
+- Footer now sits inside the RoadJourney wrap so the road leads into it. On arrival (p >= 0.9) the bike is brought to
+  the FRONT (z-index 20) and clamped clear of the bottom edge, so it parks FULLY visible on the cinematic footer
+  (fixed the earlier half-cut bike at the main/footer boundary). Elsewhere it stays behind content (z 0).
 
 ## Refinement Pass 1 (2026-08-27) — homepage art direction
 - Motorcycle now MUCH smaller and glides at the viewport vertical centre while moving horizontally along the road (banks with direction). Road drifts far across the page horizontally, creating negative space.
