@@ -144,3 +144,14 @@ Logo: /logo.png (circular 7HUES road-mark). Motorcycle marker: /moto.png (green-
     nonsensical, e.g. local vars) deps would break the scroll-motorcycle animation / cause loops.
   * component/function refactors + trivial useMemo = skipped to avoid regressions on a working, tested app.
   * array-index keys = public lists load wholesale and don't reorder at runtime (acceptable per report's own caveat).
+
+## Book Your Ride polish (2026-09-02) — DONE (tested 100%)
+- /book redesigned (Book.js): premium two-column editorial layout — left panel (heading, intro, "What happens next"
+  3 steps, direct WhatsApp/Email/Instagram from settings/social); right grouped form ("About you" / "Your ride") with
+  selects for riding experience & number of riders, placeholders, inline validation (required + email regex,
+  data-testid booking-error) replacing alert(), and a richer personalised success screen with WhatsApp quick-contact.
+- Admin Bookings tab (Admin.js): enriched table (Received date, Name+City, Contact, Expedition+Dates, Rider info,
+  Message, per-row Status dropdown), enquiry/new counts, gold left-border highlight for 'new'.
+- Backend: added PATCH /api/bookings/{id} (admin) to set status new|contacted|closed. POST/GET unchanged.
+- Verified by testing_agent iteration_10.json: backend 8/8, frontend 100% (render, validation x2, happy path,
+  admin list shows submitted enquiry end-to-end, status persist). Test bookings cleared afterwards (list = 0).

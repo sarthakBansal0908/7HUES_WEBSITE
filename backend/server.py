@@ -299,6 +299,20 @@ async def list_bookings(admin: User = Depends(require_admin)):
     return items
 
 
+class BookingStatusUpdate(BaseModel):
+    status: str
+
+
+@api.patch("/bookings/{booking_id}")
+async def update_booking_status(booking_id: str, update: BookingStatusUpdate, admin: User = Depends(require_admin)):
+    if update.status not in ("new", "contacted", "closed"):
+        raise HTTPException(status_code=400, detail="Invalid status")
+    res = await db.bookings.update_one({"id": booking_id}, {"$set": {"status": update.status}})
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    return {"ok": True}
+
+
 @api.get("/health")
 async def health():
     return {"status": "ok", "time": now_iso()}

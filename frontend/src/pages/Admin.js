@@ -480,29 +480,91 @@ function MediaLibrary() {
 }
 
 /* ------------------------------ Bookings ---------------------------------- */
+const STATUS_STYLES = {
+  new: 'bg-gold/20 text-gold border-gold/40',
+  contacted: 'bg-blue-400/15 text-blue-200 border-blue-400/40',
+  closed: 'bg-white/10 text-white/50 border-white/20',
+};
+
 function Bookings() {
   const [rows, setRows] = useState([]);
-  useEffect(() => { api.get('/bookings').then((r) => setRows(r.data)).catch(() => {}); }, []);
+  const load = () => api.get('/bookings').then((r) => setRows(r.data)).catch(() => {});
+  useEffect(() => { load(); }, []);
+
+  const changeStatus = async (id, status) => {
+    setRows((rs) => rs.map((b) => (b.id === id ? { ...b, status } : b)));
+    try { await api.patch(`/bookings/${id}`, { status }); } catch (e) { console.warn('Status update failed', e); load(); }
+  };
+
+  const fmtDate = (iso) => {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return isNaN(d) ? '—' : d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  };
+
+  const newCount = rows.filter((b) => (b.status || 'new') === 'new').length;
+
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="text-left text-white/40 overline">
-            <th className="py-3 pr-4">Name</th><th className="py-3 pr-4">Contact</th><th className="py-3 pr-4">Expedition</th><th className="py-3 pr-4">Dates</th><th className="py-3 pr-4">Message</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((b) => (
-            <tr key={b.id} className="border-t border-white/10 align-top">
-              <td className="py-3 pr-4 text-sand">{b.name}</td>
-              <td className="py-3 pr-4 text-white/60">{b.email}<br />{b.phone}</td>
-              <td className="py-3 pr-4 text-white/60">{b.expedition}</td>
-              <td className="py-3 pr-4 text-white/60">{b.preferred_dates}</td>
-              <td className="py-3 pr-4 text-white/60 max-w-xs">{b.message}</td>
+    <div>
+      <p className="text-white/50 text-sm mb-6" data-testid="bookings-count">
+        <span className="text-sand">{rows.length}</span> {rows.length === 1 ? 'enquiry' : 'enquiries'}
+        {newCount > 0 && <span> · <span className="text-gold">{newCount} new</span></span>}
+      </p>
+
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm min-w-[880px]">
+          <thead>
+            <tr className="text-left text-white/40 overline">
+              <th className="py-3 pr-4">Received</th>
+              <th className="py-3 pr-4">Name</th>
+              <th className="py-3 pr-4">Contact</th>
+              <th className="py-3 pr-4">Expedition / Dates</th>
+              <th className="py-3 pr-4">Rider</th>
+              <th className="py-3 pr-4">Message</th>
+              <th className="py-3 pr-4">Status</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rows.map((b) => {
+              const status = b.status || 'new';
+              return (
+                <tr key={b.id} data-testid={`booking-row-${b.id}`} className={`border-t border-white/10 align-top ${status === 'new' ? 'border-l-2 border-l-gold' : ''}`}>
+                  <td className="py-4 pr-4 text-white/50 whitespace-nowrap">{fmtDate(b.created_at)}</td>
+                  <td className="py-4 pr-4 text-sand">
+                    {b.name}
+                    {b.city && <span className="block text-white/40 text-xs mt-0.5">{b.city}</span>}
+                  </td>
+                  <td className="py-4 pr-4 text-white/60">
+                    <a href={`mailto:${b.email}`} className="hover:text-gold transition-colors">{b.email}</a>
+                    <span className="block text-white/50">{b.phone}</span>
+                  </td>
+                  <td className="py-4 pr-4 text-white/60">
+                    {b.expedition || '—'}
+                    {b.preferred_dates && <span className="block text-white/40 text-xs mt-0.5">{b.preferred_dates}</span>}
+                  </td>
+                  <td className="py-4 pr-4 text-white/60">
+                    {b.experience || '—'}
+                    {(b.motorcycle || b.riders) && <span className="block text-white/40 text-xs mt-0.5">{[b.motorcycle, b.riders].filter(Boolean).join(' · ')}</span>}
+                  </td>
+                  <td className="py-4 pr-4 text-white/60 max-w-[220px]"><span className="line-clamp-3">{b.message || '—'}</span></td>
+                  <td className="py-4 pr-4">
+                    <select
+                      data-testid={`booking-status-${b.id}`}
+                      value={status}
+                      onChange={(e) => changeStatus(b.id, e.target.value)}
+                      className={`text-xs uppercase tracking-wider border rounded-full px-3 py-1.5 bg-transparent cursor-pointer outline-none ${STATUS_STYLES[status] || STATUS_STYLES.new}`}
+                    >
+                      <option value="new" className="bg-charcoal text-sand">New</option>
+                      <option value="contacted" className="bg-charcoal text-sand">Contacted</option>
+                      <option value="closed" className="bg-charcoal text-sand">Closed</option>
+                    </select>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
       {rows.length === 0 && <p className="text-white/40 mt-6">No enquiries yet.</p>}
     </div>
   );
