@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { LogOut, Save, ExternalLink, Trash2, Upload, Loader2 } from 'lucide-react';
 import { api } from '../lib/api';
-import { Text, Area, Select, ImageInput, VideoInput, ListEditor } from '../components/admin/AdminFields';
+import { Text, Area, Select, Toggle, ImageInput, VideoInput, ListEditor } from '../components/admin/AdminFields';
 
 const BACKEND = process.env.REACT_APP_BACKEND_URL;
 const abs = (u) => (u && u.startsWith('/api/') ? `${BACKEND}${u}` : u);
@@ -351,6 +351,69 @@ function JournalEditor({ value = {}, onChange }) {
   );
 }
 
+function InfoFaqEditor({ value = {}, onChange }) {
+  const set = patcher(value, onChange);
+  const contact = value.contact || {};
+  const setContact = (patch) => set({ contact: { ...contact, ...patch } });
+  return (
+    <div className="space-y-8">
+      <div className="grid md:grid-cols-2 gap-6">
+        <Text label="Eyebrow" value={value.eyebrow} onChange={(v) => set({ eyebrow: v })} />
+        <Text label="Heading" value={value.heading} onChange={(v) => set({ heading: v })} />
+      </div>
+      <Area label="Intro" rows={4} value={value.intro} onChange={(v) => set({ intro: v })} />
+
+      <ListEditor
+        label="FAQ Categories"
+        items={value.categories}
+        onChange={(categories) => set({ categories })}
+        blank={{ title: 'NEW CATEGORY', enabled: true, questions: [] }}
+        addLabel="Add category"
+        renderItem={(cat, up) => (
+          <div className="space-y-4">
+            <div className="flex items-end justify-between gap-4">
+              <div className="flex-1"><Text label="Category name" value={cat.title} onChange={(v) => up({ ...cat, title: v })} /></div>
+              <Toggle label={cat.enabled !== false ? 'Visible' : 'Hidden'} value={cat.enabled !== false} onChange={(v) => up({ ...cat, enabled: v })} />
+            </div>
+            <ListEditor
+              label="Questions"
+              items={cat.questions}
+              onChange={(questions) => up({ ...cat, questions })}
+              blank={{ q: '', a: '', enabled: true }}
+              addLabel="Add question"
+              renderItem={(q, upq) => (
+                <div className="space-y-3">
+                  <div className="flex items-end justify-between gap-4">
+                    <div className="flex-1"><Text label="Question" value={q.q} onChange={(v) => upq({ ...q, q: v })} /></div>
+                    <Toggle label={q.enabled !== false ? 'Visible' : 'Hidden'} value={q.enabled !== false} onChange={(v) => upq({ ...q, enabled: v })} />
+                  </div>
+                  <Area label="Answer (blank line = new paragraph, '- ' = bullet)" rows={4} value={q.a} onChange={(v) => upq({ ...q, a: v })} />
+                </div>
+              )}
+            />
+          </div>
+        )}
+      />
+
+      <div className="border-t border-white/10 pt-8 space-y-6">
+        <p className="overline text-gold">Closing contact section</p>
+        <div className="grid md:grid-cols-2 gap-6">
+          <Text label="Contact eyebrow" value={contact.eyebrow} onChange={(v) => setContact({ eyebrow: v })} />
+          <Text label="Contact heading" value={contact.heading} onChange={(v) => setContact({ heading: v })} />
+        </div>
+        <Area label="Contact body" rows={3} value={contact.body} onChange={(v) => setContact({ body: v })} />
+        <div className="grid md:grid-cols-3 gap-6">
+          <Text label="WhatsApp label" value={contact.whatsapp_label} onChange={(v) => setContact({ whatsapp_label: v })} />
+          <Text label="Email label" value={contact.email_label} onChange={(v) => setContact({ email_label: v })} />
+          <Text label="Instagram label" value={contact.instagram_label} onChange={(v) => setContact({ instagram_label: v })} />
+        </div>
+        <Area label="Closing line" rows={2} value={contact.footer_line} onChange={(v) => setContact({ footer_line: v })} />
+        <p className="text-white/30 text-xs">Contact button destinations reuse your existing WhatsApp / Email / Instagram from the Site Settings & Social Links tabs — edit them there.</p>
+      </div>
+    </div>
+  );
+}
+
 function FooterEditor({ value = {}, onChange }) {
   const set = patcher(value, onChange);
   return (
@@ -459,6 +522,7 @@ const SECTIONS = [
   { id: 'people', label: 'Our People', key: 'people', C: PeopleEditor },
   { id: 'road', label: 'From The Road', key: 'from_the_road', C: FromRoadEditor },
   { id: 'journal', label: 'Journal', key: 'journal', C: JournalEditor },
+  { id: 'infofaq', label: 'Info & FAQ', key: 'info_faq', C: InfoFaqEditor },
   { id: 'footer', label: 'Footer', key: 'footer', C: FooterEditor },
 ];
 

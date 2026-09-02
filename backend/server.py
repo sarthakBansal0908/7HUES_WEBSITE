@@ -1,5 +1,6 @@
 import os
 import uuid
+import json
 import logging
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -306,6 +307,14 @@ async def health():
 # ---------------------------------------------------------------------------
 # Default seed content
 # ---------------------------------------------------------------------------
+def _load_info_faq_seed() -> Dict[str, Any]:
+    try:
+        with open(ROOT_DIR / "info_faq_seed.json", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
 def default_content() -> Dict[str, Any]:
     img = lambda u: u
     return {
@@ -449,6 +458,7 @@ def default_content() -> Dict[str, Any]:
             "image": "https://images.unsplash.com/photo-1550149550-33b46c745e03?crop=entropy&cs=srgb&fm=jpg&q=85&w=1920",
             "copyright": "© 2026 7HUES Expeditions. All rights reserved.",
         },
+        "info_faq": _load_info_faq_seed(),
     }
 
 

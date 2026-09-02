@@ -1,0 +1,24 @@
+{
+  "summary": "Frontend-only test of new '/info' Info & FAQ page and its CMS editor at /admin (Info & FAQ tab). Public page: eyebrow 'BEFORE YOU RIDE', h1 'Know before you go.', intro paragraphs, and 14 numbered category accordions all render. Category-level accordion (aria-expanded toggles false<->true), question-level accordion (33 total questions), RichText answers, Open all (14 cats + 33 qs = all expanded), Close all (0 expanded), Contact section with WhatsApp (wa.me/919810732107), Email (mailto:info@7huesexpeditions.com), Instagram (https://www.instagram.com/7huesexpeditions/) links, single italic closing line, and Footer all present. CMS: /admin loads with 'Info & FAQ' sidebar tab (data-testid=admin-tab-infofaq); editor shows Eyebrow/Heading/Intro inputs, 'FAQ Categories' list editor, nested 'Questions' editor per category (Question + Answer + Visible toggle), and 'Closing contact section'. End-to-end save persistence VERIFIED twice: (1) changed Heading to 'Know before you go. (TEST)' -> Save -> reload /info -> heading updated -> reverted; (2) toggled category 'THE EXPEDITION' Visible->Hidden -> Save -> reload /info -> category count dropped from 14 to 13 and 'THE EXPEDITION' absent -> reverted. Data reverted to original state at end. No regressions found.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "InfoFAQ.js filter chain removes categories with zero visible questions (line 78 `.filter((c) => c.questions.length > 0)`). If an admin hides all questions in a category, the category silently disappears from the public page even if its Visible toggle is on — worth documenting or surfacing a warning in the CMS.",
+    "CMS 'Add category' blank uses `title: 'NEW CATEGORY'` and Add question uses empty string `q: ''` — empty questions will still render on the public page as an empty tappable row until answered. Consider hiding questions with empty q/a from public output.",
+    "Contact WhatsApp label filters via `(settings.whatsapp || '').replace(/[^\\d]/g, '')` — if the admin removes WhatsApp from settings, the button disappears. This is intended behavior but not obvious to CMS editor (mentioned in helper text). Fine as-is.",
+    "InfoFAQ initial state `useState(() => new Set([0]))` always opens the first category by default — nice UX, but note if the first category is Hidden, the second category (index 0 in the filtered list) is what opens, which is the intended behavior via filtered array — confirmed working."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "not tested", "frontend": "100% — all public /info interactions and all CMS Info&FAQ editing/persistence flows pass"},
+  "test_credentials": "Admin session injected in Mongo: user email 7huesexpeditions@gmail.com, session_token cookie set on preview host. See /app/memory/test_credentials.md for the seeding pattern.",
+  "seed_data_creation": "Inserted one 'users' doc (email 7huesexpeditions@gmail.com, is_admin:true) and one 'user_sessions' doc (expires_at +1d). Content DB was mutated during tests (heading + one visibility toggle) then reverted to original values before finishing.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Public /info page and its CMS at /admin -> 'Info & FAQ' tab are fully working, including nested Questions editor, Visible/Hidden Toggle, and PUT /api/content persistence (heading + category enabled flag). Data was reverted at end so DB is clean. Preview URL: https://road-unfolds.preview.emergentagent.com. Existing seeded admin session token (tok_fb583162544d452698ed7bb65446922f, valid +1d) exists in Mongo 'sevenhues.user_sessions' if needed for follow-up testing."
+}

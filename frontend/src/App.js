@@ -7,6 +7,7 @@ import useLenis from './hooks/useLenis';
 import Home from './pages/Home';
 import Book from './pages/Book';
 import Placeholder from './pages/Placeholder';
+import InfoFAQ from './pages/InfoFAQ';
 import Admin from './pages/Admin';
 import AuthCallback from './pages/AuthCallback';
 
@@ -32,7 +33,7 @@ function SiteShell() {
       <Route path="/expeditions" element={<Placeholder title="Expeditions" content={content} />} />
       <Route path="/destinations" element={<Placeholder title="Destinations" content={content} />} />
       <Route path="/experiences" element={<Placeholder title="Experiences" content={content} />} />
-      <Route path="/info" element={<Placeholder title="Info & FAQ" content={content} />} />
+      <Route path="/info" element={<InfoFAQ content={content} />} />
       <Route path="/journal" element={<Placeholder title="Journal" content={content} />} />
       <Route path="/journal/:slug" element={<Placeholder title="Journal" content={content} />} />
       <Route path="/community" element={<Placeholder title="Our People" content={content} />} />

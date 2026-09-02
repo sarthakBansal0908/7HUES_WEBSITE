@@ -1,0 +1,265 @@
+{
+  "eyebrow": "BEFORE YOU RIDE",
+  "heading": "Know before you go.",
+  "intro": "Every expedition asks something different of you — long roads, changing weather, unfamiliar terrain, early starts and the occasional plan that changes with the mountains.\n\nWe take care of the journey around you. You just need to arrive prepared to be part of it.\n\nEverything worth knowing before riding with 7HUES is here.",
+  "categories": [
+    {
+      "title": "THE EXPEDITION",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "What exactly is a 7HUES Expedition?",
+          "a": "7HUES creates curated road journeys built around riding, exploration, people, culture and experiences along the way.\n\nThese aren't conventional sightseeing packages or point-to-point motorcycle tours. Routes are designed to leave room for the road itself — scenic stretches, local experiences, conversations, unexpected stops and places worth slowing down for.\n\nEach expedition has its own itinerary, inclusions, accommodation and difficulty level. You'll find the trip-specific details on the respective Experience page.",
+          "enabled": true
+        },
+        {
+          "q": "Who can join?",
+          "a": "Our expeditions are designed for people who genuinely enjoy travelling and exploring.\n\nSome journeys are motorcycle-focused, while others may include different ways of travelling. Individual expedition pages will clearly mention rider requirements.\n\nSolo travellers are welcome. You don't need to arrive with a group.",
+          "enabled": true
+        },
+        {
+          "q": "Do I need previous riding experience?",
+          "a": "For motorcycle expeditions, yes.\n\nThe level of experience required depends on the terrain and destination. High-altitude or difficult-terrain expeditions may require considerably more riding experience than relaxed road journeys.\n\nWe would rather recommend a more suitable expedition than put someone on a route they aren't ready for.",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "title": "MOTORCYCLES",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "Can I bring my own motorcycle?",
+          "a": "Yes, wherever the expedition format allows it.\n\nYour motorcycle should be properly serviced and suitable for the terrain before departure.",
+          "enabled": true
+        },
+        {
+          "q": "Can 7HUES arrange a motorcycle?",
+          "a": "For selected expeditions, motorcycles can be arranged.\n\nAvailable models, rental charges, security deposits and applicable terms vary by destination and will be communicated before booking.",
+          "enabled": true
+        },
+        {
+          "q": "What happens if my motorcycle breaks down?",
+          "a": "Our team will assist with basic troubleshooting and roadside situations wherever possible.\n\nFor supported motorcycle expeditions, the exact level of mechanical/back-up support will be mentioned in the expedition inclusions.\n\nMajor repairs, replacement parts, towing or damage caused to a personal/rental motorcycle may involve additional costs.",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "title": "STAY",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "What kind of accommodation should I expect?",
+          "a": "Accommodation is selected as part of the experience rather than simply as a place to sleep.\n\nDepending on where we're travelling, this may mean boutique hotels, premium camps, mountain properties, homestays, heritage stays or simpler accommodation in remote regions.\n\nComfort standards naturally vary when an expedition takes us away from major towns.",
+          "enabled": true
+        },
+        {
+          "q": "Is accommodation shared?",
+          "a": "Unless mentioned otherwise, expedition pricing is generally based on twin-sharing accommodation.\n\nSingle occupancy may be available at an additional cost depending on the property and expedition.",
+          "enabled": true
+        },
+        {
+          "q": "Can couples stay together?",
+          "a": "Yes. Let us know while booking and we'll arrange the room accordingly wherever possible.",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "title": "FOOD",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "Are meals included?",
+          "a": "Meal inclusions vary by expedition and are clearly mentioned before booking.\n\nWhere meals aren't included, we often stop at places selected along the route so travellers can order according to their preferences.",
+          "enabled": true
+        },
+        {
+          "q": "What about vegetarian or dietary requirements?",
+          "a": "Tell us before the expedition.\n\nWe'll communicate dietary requirements to our stays and meal partners wherever possible. In very remote regions, options can naturally be limited.",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "title": "ON THE ROAD",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "How does a typical riding day work?",
+          "a": "There isn't really a \"typical\" one.\n\nWe usually begin with a briefing covering the day's route, weather, fuel availability, regrouping points and anything important about the terrain ahead.\n\nDuring the ride, the group travels with planned regrouping points rather than treating the journey like a race.\n\nThere will be breaks for food, landscapes, photographs, conversations — and sometimes simply because a place deserves ten more minutes.",
+          "enabled": true
+        },
+        {
+          "q": "Do we have to ride together all the time?",
+          "a": "We ride as a group, but not in an unnecessarily rigid formation.\n\nRiders are expected to follow the ride captain's instructions, maintain safe distances and regroup at designated locations.\n\nThe idea is to give everyone enough freedom to enjoy the road without compromising the safety of the group.",
+          "enabled": true
+        },
+        {
+          "q": "How fast do we ride?",
+          "a": "At a pace appropriate for the road, weather, terrain and group.\n\n7HUES expeditions are not races.",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "title": "ROUTES & ITINERARIES",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "Can the itinerary change?",
+          "a": "Yes.\n\nMountain roads, weather, landslides, local restrictions, traffic, political conditions and other factors can occasionally change what is possible.\n\nOur team may modify routes, departure times, stops or accommodation when required for safety or operational reasons.\n\nThe destination matters.\n\nGetting everyone there safely matters more.",
+          "enabled": true
+        },
+        {
+          "q": "How much distance do we cover each day?",
+          "a": "It varies considerably between expeditions.\n\nInstead of judging a day purely by kilometres, consider terrain, altitude and road conditions. A 150 km mountain day can demand much more than a 400 km highway day.\n\nApproximate daily distances are provided with each expedition itinerary.",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "title": "PACKING & GEAR",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "What riding gear is required?",
+          "a": "For motorcycle expeditions, we strongly recommend:\n\n- Certified full-face helmet\n- Riding jacket with protection\n- Riding gloves\n- Riding pants or knee protection\n- Ankle-covering riding boots\n- Rain protection\n- Appropriate thermal layers for cold regions\n\nTrip-specific requirements will be shared before departure.",
+          "enabled": true
+        },
+        {
+          "q": "What should I pack?",
+          "a": "Keep it light and functional.\n\nA destination-specific packing checklist will be shared before the expedition, particularly for journeys involving cold weather, high altitude or remote regions.\n\nAvoid carrying unnecessary luggage on the motorcycle.",
+          "enabled": true
+        },
+        {
+          "q": "Can I bring cameras and other equipment?",
+          "a": "Absolutely.\n\nMany of the places we travel through are worth documenting.\n\nYou remain responsible for protecting and carrying your personal equipment throughout the expedition.",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "title": "HEALTH & ALTITUDE",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "Are high-altitude expeditions difficult?",
+          "a": "They can be.\n\nDestinations such as Ladakh involve rapid changes in altitude and may affect travellers differently regardless of age or fitness.\n\nOur itineraries are planned with acclimatisation in mind wherever required.",
+          "enabled": true
+        },
+        {
+          "q": "What if I have a medical condition?",
+          "a": "Please disclose any relevant medical condition before booking an expedition.\n\nFor demanding or high-altitude journeys, we may recommend obtaining medical clearance before travelling.\n\nCarry your prescribed medicines and inform the expedition team about anything we should know in an emergency.",
+          "enabled": true
+        },
+        {
+          "q": "What happens if someone becomes unwell?",
+          "a": "The expedition team will assess the situation and help arrange appropriate assistance based on the location and circumstances.\n\nRemote expeditions inherently have limited immediate access to medical facilities, which is why preparation and disclosure before departure are important.",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "title": "DOCUMENTS & PERMITS",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "What documents should I carry?",
+          "a": "For motorcycle expeditions, riders should generally carry originals or valid digital/physical copies of:\n\n- Driving licence\n- Government-issued ID\n- Motorcycle registration certificate\n- Valid insurance\n- Pollution certificate, where applicable\n- Any destination-specific documents communicated by our team",
+          "enabled": true
+        },
+        {
+          "q": "Who handles permits?",
+          "a": "Where permits are part of the expedition, 7HUES will either arrange them or guide you through exactly what is required.\n\nYou may be asked to submit identification documents before departure.",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "title": "SAFETY",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "How does 7HUES manage safety?",
+          "a": "Every expedition begins with route planning and an understanding of terrain, weather, fuel availability and local conditions.\n\nOn riding expeditions, participants are expected to follow instructions from the expedition lead or ride captain.\n\nSafety decisions made by the expedition team during the journey take priority over the planned itinerary.",
+          "enabled": true
+        },
+        {
+          "q": "What if the weather becomes bad?",
+          "a": "We adapt.\n\nDeparture times, routes and stops may be changed if conditions demand it.\n\nThere are places where nature gets the final vote.",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "title": "BOOKINGS & PAYMENTS",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "How do I reserve my spot?",
+          "a": "Select an expedition and use the booking/enquiry option on its Experience page.\n\nOur team will confirm availability and share the booking process with you.\n\nA spot is considered confirmed once the required booking amount has been received and confirmation has been issued by 7HUES.",
+          "enabled": true
+        },
+        {
+          "q": "Can I pay in instalments?",
+          "a": "For selected expeditions, payments may be divided into stages.\n\nThe payment schedule and final payment deadline will be communicated at the time of booking.",
+          "enabled": true
+        },
+        {
+          "q": "What is included in the expedition price?",
+          "a": "Every expedition is different.\n\nAccommodation, meals, motorcycles, fuel, permits, support vehicles, experiences and other services may vary between journeys.\n\nFor that reason, every Experience page contains its own clear **Inclusions & Exclusions** section.",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "title": "CANCELLATIONS & CHANGES",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "What happens if I need to cancel?",
+          "a": "Cancellation terms depend on how close the cancellation is to the departure date because accommodation, logistics, permits and other arrangements are booked in advance.\n\nThe applicable cancellation policy will be shown during the booking process.",
+          "enabled": true
+        },
+        {
+          "q": "What if 7HUES has to change or cancel an expedition?",
+          "a": "Certain circumstances — including extreme weather, road closures, natural events, government restrictions or other situations outside our control — can affect an expedition.\n\nWhere possible, we will first attempt to modify or reschedule the journey.\n\nAny applicable refund, credit or rescheduling terms will be communicated according to the expedition's booking conditions.",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "title": "SOLO TRAVELLERS",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "Can I come alone?",
+          "a": "Please do.\n\nA large part of an expedition is meeting the people you didn't arrive with.\n\nMany travellers join without knowing anyone else in the group. The shared road usually takes care of the introductions.",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "title": "PHOTOS & FILMS",
+      "enabled": true,
+      "questions": [
+        {
+          "q": "Will the expedition be photographed or filmed?",
+          "a": "Many 7HUES journeys are documented through photography and film.\n\nSome expeditions may have dedicated creators travelling with the group, while others may only be documented occasionally.\n\nIf professional expedition media is included in your particular journey, it will be mentioned in the Experience details.",
+          "enabled": true
+        }
+      ]
+    }
+  ],
+  "contact": {
+    "eyebrow": "STILL WONDERING?",
+    "heading": "Talk to us.",
+    "body": "Choosing an expedition sometimes takes more than reading an itinerary.\n\nAsk us about the route, motorcycles, riding difficulty, weather, stays, gear — or whether a particular journey is right for you.",
+    "whatsapp_label": "WHATSAPP",
+    "email_label": "EMAIL",
+    "instagram_label": "INSTAGRAM",
+    "footer_line": "We'd rather answer the question before the road than halfway through it."
+  }
+}

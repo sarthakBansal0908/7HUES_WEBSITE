@@ -52,6 +52,18 @@ export function Select({ label, value, onChange, options }) {
   );
 }
 
+export function Toggle({ label, value = true, onChange }) {
+  return (
+    <button type="button" onClick={() => onChange(!value)} className="inline-flex items-center gap-3 shrink-0">
+      <span className={`relative h-5 w-9 rounded-full transition-colors ${value ? 'bg-gold' : 'bg-white/15'}`}>
+        <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all ${value ? 'left-[1.125rem]' : 'left-0.5'}`} />
+      </span>
+      <span className="overline text-white/50">{label}</span>
+    </button>
+  );
+}
+
+
 async function uploadFile(file, alt = '') {
   const fd = new FormData();
   fd.append('file', file);

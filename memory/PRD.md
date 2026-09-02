@@ -121,3 +121,15 @@ Logo: /logo.png (circular 7HUES road-mark). Motorcycle marker: /moto.png (green-
 - Note: the automated preview/headless browser blocks YouTube playback (shows "Video unavailable" for ANY video incl.
   a known-embeddable control), so it cannot be visually verified here — plays in real browsers. If a specific video
   still says unavailable in a real browser, its owner disabled embedding → use a different link or upload the file.
+
+## Info & FAQ page + CMS (2026-09-02) — DONE (tested 100%)
+- New editorial page at /info (InfoFAQ.js): eyebrow/heading/intro, 14 category accordions (numbered, thin dividers),
+  each expands to question sub-accordions with rich-text answers (paragraphs, "- " bullets, **bold**), Open all/Close
+  all controls, cinematic contact ending (WhatsApp/Email/Instagram derived from Site Settings + Social), real Footer.
+- Content stored under content.info_faq; parsed from supplied markdown into /app/backend/info_faq_seed.json (14 cats /
+  33 Qs), seeded into DB and into default_content() for fresh installs. server.py: import json + _load_info_faq_seed().
+- Full CMS: Admin.js 'Info & FAQ' tab (InfoFaqEditor) — edit eyebrow/heading/intro; add/remove/reorder/rename
+  categories with Visible/Hidden toggle; nested add/remove/reorder questions with edit q&a + Visible/Hidden toggle;
+  edit contact section (eyebrow/heading/body/labels/closing line). New Toggle field in AdminFields.js.
+- Public page hides disabled categories, disabled questions, and empty-question rows. Route wired in App.js.
+- Verified by testing_agent (iteration_8.json): all public interactions + CMS edit/toggle/save-persistence PASS.
