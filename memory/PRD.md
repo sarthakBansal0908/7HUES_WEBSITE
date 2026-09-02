@@ -112,3 +112,12 @@ Logo: /logo.png (circular 7HUES road-mark). Motorcycle marker: /moto.png (green-
 - Rendered via <img class="h-9/h-8 w-auto object-contain"> (data-testid brand-wordmark-header / -footer). Circular
   logo (settings.logo) kept alongside. Backend already persists arbitrary settings keys ($set). Verified end-to-end
   by temporarily injecting an image (swap confirmed), then reverting to empty.
+
+## Hero YouTube/Vimeo support (2026-09-02) — DONE
+- Bug: Hero used a native <video src> tag, which cannot play a YouTube/Vimeo link (only direct file URLs / uploads).
+- Fix: Hero.js now resolveVideo(url) — detects YouTube (youtu.be / watch / embed / shorts) & Vimeo IDs and renders a
+  full-screen background <iframe> (autoplay+mute+loop+no-controls, cover via 177.78vh/56.25vw trick, origin param);
+  falls back to <video> for direct/uploaded files; poster shown as underlay. testids: hero-video-embed / -file.
+- Note: the automated preview/headless browser blocks YouTube playback (shows "Video unavailable" for ANY video incl.
+  a known-embeddable control), so it cannot be visually verified here — plays in real browsers. If a specific video
+  still says unavailable in a real browser, its owner disabled embedding → use a different link or upload the file.

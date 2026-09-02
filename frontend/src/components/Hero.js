@@ -2,22 +2,63 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
+// Turn a pasted URL into the right kind of background player.
+function resolveVideo(url = '') {
+  if (!url) return { type: 'none' };
+  const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+  if (yt) {
+    const id = yt[1];
+    const params = new URLSearchParams({
+      autoplay: '1', mute: '1', controls: '0', loop: '1', playlist: id,
+      playsinline: '1', modestbranding: '1', rel: '0', showinfo: '0',
+      disablekb: '1', fs: '0', iv_load_policy: '3',
+    });
+    if (typeof window !== 'undefined') params.set('origin', window.location.origin);
+    return { type: 'embed', src: `https://www.youtube.com/embed/${id}?${params.toString()}` };
+  }
+  const vimeo = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vimeo) {
+    return { type: 'embed', src: `https://player.vimeo.com/video/${vimeo[1]}?background=1&autoplay=1&loop=1&muted=1` };
+  }
+  return { type: 'file', src: url };
+}
+
 export default function Hero({ content }) {
   const hero = content?.hero || {};
   const settings = content?.settings || {};
+  const video = resolveVideo(hero.video_url);
 
   return (
     <section data-testid="hero" className="relative h-[100svh] w-full overflow-hidden bg-charcoal">
-      <video
-        className="absolute inset-0 h-full w-full object-cover"
-        src={hero.video_url}
-        poster={hero.poster}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-      />
+      {/* poster underlay so there is no black flash before the video loads */}
+      {hero.poster && (
+        <img src={hero.poster} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
+      )}
+
+      {video.type === 'embed' ? (
+        <iframe
+          data-testid="hero-video-embed"
+          title="Showreel"
+          src={video.src}
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+          frameBorder="0"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[56.25vw] min-w-full min-h-full pointer-events-none"
+        />
+      ) : video.type === 'file' ? (
+        <video
+          data-testid="hero-video-file"
+          className="absolute inset-0 h-full w-full object-cover"
+          src={video.src}
+          poster={hero.poster}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
+      ) : null}
+
       <div className="absolute inset-0 bg-black/45" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/50" />
 
