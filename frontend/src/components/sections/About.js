@@ -32,11 +32,11 @@ export default function About({ data }) {
 
         {(data.team || []).length > 0 && (
           <div className="mt-20 md:mt-28">
-            <p className="overline text-gold mb-10">{data.team_title || 'THE TEAM'}</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            <p className="overline text-gold mb-10 text-center">{data.team_title || 'THE TEAM'}</p>
+            <div className="flex flex-wrap justify-center gap-6 md:gap-8">
               {data.team.map((m, i) => (
-                <Reveal key={i} delay={i * 0.06}>
-                  <div data-testid={`team-member-${i}`}>
+                <Reveal key={i} delay={i * 0.06} className="w-[calc(50%-0.75rem)] md:w-[calc(25%-1.5rem)]">
+                  <div data-testid={`team-member-${i}`} className="text-center">
                     <div className="aspect-[3/4] overflow-hidden rounded-xl mb-4">
                       <img src={m.image} alt={m.name} loading="lazy" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
                     </div>
