@@ -646,7 +646,7 @@ export default function Admin() {
   }, [location.state]);
 
   const logout = async () => {
-    try { await api.post('/auth/logout'); } catch (e) {}
+    try { await api.post('/auth/logout'); } catch (e) { console.warn('Logout request failed', e); }
     setUser(null);
   };
 

@@ -133,3 +133,14 @@ Logo: /logo.png (circular 7HUES road-mark). Motorcycle marker: /moto.png (green-
   edit contact section (eyebrow/heading/body/labels/closing line). New Toggle field in AdminFields.js.
 - Public page hides disabled categories, disabled questions, and empty-question rows. Route wired in App.js.
 - Verified by testing_agent (iteration_8.json): all public interactions + CMS edit/toggle/save-persistence PASS.
+
+## Code review response (2026-09-02)
+- Applied 1 safe fix: Admin.js logout empty catch now logs via console.warn (was swallowing errors). Verified by
+  testing_agent iteration_9.json — homepage/info/admin-logout all pass 100%, no regressions.
+- Assessed the rest as FALSE POSITIVES / regression-risky and intentionally left unchanged:
+  * "eval() security" = `mongo_eval()` helper running `mongosh --eval` via subprocess (test-only); no Python eval().
+  * "is -> ==" = all are correct `is None` / `is True` / `is False` idioms (PEP8); changing would be an anti-pattern.
+  * "missing hook deps" = intentional mount-once setup effects (scroll/Lenis/OAuth/content fetch); adding the (partly
+    nonsensical, e.g. local vars) deps would break the scroll-motorcycle animation / cause loops.
+  * component/function refactors + trivial useMemo = skipped to avoid regressions on a working, tested app.
+  * array-index keys = public lists load wholesale and don't reorder at runtime (acceptable per report's own caveat).
